@@ -1,6 +1,29 @@
+<script setup lang="ts">
+import Logo from '../templates/Logo.vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+
+const windowWidth = ref(window.innerWidth)
+
+const updateWindowWidth = () => {
+    windowWidth.value = window.innerWidth
+}
+
+onMounted(() => {
+    window.addEventListener('resize', updateWindowWidth)
+})
+
+onUnmounted(() => {
+    window.removeEventListener('resize', updateWindowWidth)
+})
+
+const logoSize = computed(() => {
+    return windowWidth.value < 768 ? 54 : 68
+})
+</script>
+
 <template>
     <div class="home">
-        <img src="../../assets/icons/logo.svg" alt="Inactive logo" />
+        <logo :size="logoSize" />
         <div class="home__desc">
             <h1 class="home__title">Welcome to the app!</h1>
             <p class="home__text">
