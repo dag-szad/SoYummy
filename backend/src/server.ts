@@ -1,9 +1,11 @@
 import express, { Request, Response, NextFunction } from 'express'
-import connectDB from './database'
-import cors from 'cors'
-import User from './models/User'
-import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
+import cors from 'cors'
+
+import connectDB from './database'
+import Blacklist from './models/Blacklist'
+import User from './models/User'
 
 const port: number = 3000
 const app: express.Application = express()
@@ -72,6 +74,34 @@ app.post('/login', async (req: Request, res: Response): Promise<void> => {
     }
 })
 
+// Endpoint wylogowania
+app.post('/logout', async (req: Request, res: Response): Promise<void> => {
+    try {
+        const authHeader: string | undefined = req.headers['cookie'] as string | undefined;
+        if (!authHeader) {
+            res.sendStatus(204);
+            return;
+        }
+        const cookie: string = authHeader.split('=')[1];
+        const accessToken: string = cookie.split(';')[0];
+        const checkIfBlacklisted = await Blacklist.findOne({ token: accessToken });
+        if (checkIfBlacklisted) {
+            res.sendStatus(204);
+            return;
+        }
+        const newBlacklist = new Blacklist({
+            token: accessToken,
+        });
+        await newBlacklist.save();
+        res.setHeader('Clear-Site-Data', '"cookies"');
+        res.status(201).json({ message: 'User logged out successfully' });
+    } catch (error: unknown) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// Testowy endpoint
 app.get('/', (req: Request, res: Response): void => {
     res.send('<h1>Hello from backend!</h1>')
 })
