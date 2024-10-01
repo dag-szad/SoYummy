@@ -28,9 +28,19 @@ body {
 }
 
 h1 {
-    margin: 0
+    margin: 0;
 }
 
 p {
-    margin: 0
+    margin: 0;
+}
+
+::-moz-selection {
+    color: var(--main-white);
+    background: var(--main-green);
+}
+
+::selection {
+    color: var(--main-white);
+    background: var(--main-green);
 }
