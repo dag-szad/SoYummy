@@ -15,8 +15,8 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         { path: '/', component: HomePage, meta: { title: 'Home Page' } },
-        { path: '/register', component: Register, meta: { title: 'Login' } },
-        { path: '/login', component: Login, meta: { title: 'Register' } },
+        { path: '/register', component: Register, meta: { title: 'Register' } },
+        { path: '/login', component: Login, meta: { title: 'Login' } },
         { path: '/main', component: MainPage, meta: { title: 'Main Page' } },
         {
             path: '/:pathMatch(.*)*',
