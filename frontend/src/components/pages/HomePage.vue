@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import Logo from '../templates/Logo.vue'
+import MainButton from '../templates/MainButton.vue'
+
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 
 const windowWidth = ref(window.innerWidth)
@@ -34,10 +36,22 @@ const logoSize = computed(() => {
         </div>
         <div class="home__buttons">
             <router-link to="/register">
-                <button>Registration</button>
+                <main-button
+                    button-title="Registration"
+                    type="green"
+                    shape="round"
+                    theme="light"
+                    size="small"
+                />
             </router-link>
             <router-link to="/login">
-                <button>Sign in</button>
+                <main-button
+                    button-title="Login"
+                    type="transparent"
+                    shape="round"
+                    theme="light"
+                    size="small"
+                />
             </router-link>
         </div>
     </div>
