@@ -18,7 +18,7 @@
                 100vw"
             />
             <div class="register__form">
-                <div class="pseudoform"></div>
+                <auth-form destination="register" />
                 <router-link class="link" to="/login"> Sign in </router-link>
             </div>
         </div>
@@ -26,21 +26,11 @@
     <div class="trapezoid"></div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import AuthForm from '../templates/AuthForm.vue'
+</script>
 
 <style lang="scss" scoped>
-.pseudoform {
-    width: 335px;
-    height: 315px;
-    background-color: var(--grey-form);
-    border-radius: 30px;
-
-    @media (min-width: 768px) {
-        width: 500px;
-        height: 420px;
-    }
-}
-
 .register {
     display: flex;
     flex-direction: column;
