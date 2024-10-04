@@ -8,8 +8,9 @@
     -moz-osx-font-smoothing: grayscale;
 
     --dark-grey: #22252a;
-    --grey-form: #2a2c36;
     --dark-grey-hover: #3a3c41;
+    --grey-form: #2a2c36;
+    --grey-form-border: #5d5f64;
     --grey: #bdbdbd;
     --light-grey: #d9d9d9;
     --main-white: #fafafa;
@@ -21,7 +22,7 @@
 
     --alert-yellow: #f6c23e;
     --error-red: #e74a3b;
-    --correct-green: #3cbc81;
+    --correct-green: #78af49;
 }
 
 body {
