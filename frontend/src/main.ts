@@ -17,7 +17,11 @@ const router = createRouter({
         { path: '/', component: HomePage, meta: { title: 'Home Page' } },
         { path: '/register', component: Register, meta: { title: 'Register' } },
         { path: '/login', component: Login, meta: { title: 'Login' } },
-        { path: '/main', component: MainPage, meta: { title: 'Main Page' } },
+        {
+            path: '/main',
+            component: MainPage,
+            meta: { title: 'Main Page', requiresAuth: true },
+        },
         {
             path: '/:pathMatch(.*)*',
             component: NotFound,
@@ -29,7 +33,15 @@ const router = createRouter({
 router.beforeEach((to, _from, next) => {
     const title = 'SoYummy | ' + to.meta.title || 'SoYummy'
     document.title = title
-    next()
+
+    const isLoggedIn = !!localStorage.getItem('token')
+    const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)
+
+    if (requiresAuth && !isLoggedIn) {
+        next('/login')
+    } else {
+        next()
+    }
 })
 
 const app = createApp(App)
