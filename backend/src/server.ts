@@ -22,6 +22,7 @@ app.post('/register', async (req: Request, res: Response): Promise<void> => {
         email,
         password,
     }: { username: string; email: string; password: string } = req.body
+
     try {
         const existingUser = await User.findOne({ email })
         if (existingUser) {
@@ -33,7 +34,15 @@ app.post('/register', async (req: Request, res: Response): Promise<void> => {
         const newUser = new User({ username, email, password: hashedPassword })
         await newUser.save()
 
-        res.status(201).json({ message: 'User registered successfully' })
+        const token: string = jwt.sign(
+            { id: newUser._id },
+            process.env.JWT_SECRET || 'your_jwt_secret',
+            {
+                expiresIn: '1h',
+            }
+        )
+
+        res.status(201).json({ message: 'User registered successfully', token })
     } catch (error) {
         console.error(error)
         res.status(500).json({ message: 'Server error' })
@@ -77,29 +86,33 @@ app.post('/login', async (req: Request, res: Response): Promise<void> => {
 // Endpoint wylogowania
 app.post('/logout', async (req: Request, res: Response): Promise<void> => {
     try {
-        const authHeader: string | undefined = req.headers['cookie'] as string | undefined;
+        const authHeader: string | undefined = req.headers['cookie'] as
+            | string
+            | undefined
         if (!authHeader) {
-            res.sendStatus(204);
-            return;
+            res.sendStatus(204)
+            return
         }
-        const cookie: string = authHeader.split('=')[1];
-        const accessToken: string = cookie.split(';')[0];
-        const checkIfBlacklisted = await Blacklist.findOne({ token: accessToken });
+        const cookie: string = authHeader.split('=')[1]
+        const accessToken: string = cookie.split(';')[0]
+        const checkIfBlacklisted = await Blacklist.findOne({
+            token: accessToken,
+        })
         if (checkIfBlacklisted) {
-            res.sendStatus(204);
-            return;
+            res.sendStatus(204)
+            return
         }
         const newBlacklist = new Blacklist({
             token: accessToken,
-        });
-        await newBlacklist.save();
-        res.setHeader('Clear-Site-Data', '"cookies"');
-        res.status(201).json({ message: 'User logged out successfully' });
+        })
+        await newBlacklist.save()
+        res.setHeader('Clear-Site-Data', '"cookies"')
+        res.status(201).json({ message: 'User logged out successfully' })
     } catch (error: unknown) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        console.error(error)
+        res.status(500).json({ message: 'Server error' })
     }
-});
+})
 
 // Testowy endpoint
 app.get('/', (req: Request, res: Response): void => {
