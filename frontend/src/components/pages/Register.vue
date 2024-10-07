@@ -4,6 +4,7 @@
             <img
                 src="/src/assets/images/loginRegister/register-mobile@1x.png"
                 alt="Register page image"
+                class="register__image"
                 :srcset="`
                     /src/assets/images/loginRegister/register-mobile@1x.png 250w,
                     /src/assets/images/loginRegister/register-mobile@2x.png 500w,
@@ -17,10 +18,7 @@
                 (min-width: 1200px) 500px, 
                 100vw"
             />
-            <div class="register__form">
-                <auth-form destination="register" />
-                <router-link class="link" to="/login"> Sign in </router-link>
-            </div>
+            <auth-form destination="register" />
         </div>
     </div>
     <div class="trapezoid"></div>
@@ -56,23 +54,18 @@ import AuthForm from '../templates/AuthForm.vue'
         }
     }
 
-    &__form {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 18px;
+    &__image {
+        width: 250px;
+
+        @media (min-width: 768px) {
+            width: 410px;
+        }
+        @media (min-width: 1200px) {
+            width: 500px;
+        }
     }
 }
 
-.link {
-    color: var(--main-white);
-    transition: color 0.3s ease-in-out;
-
-    &:hover {
-        color: var(--main-green-hover);
-    }
-}
 .trapezoid {
     position: absolute;
     z-index: 0;
