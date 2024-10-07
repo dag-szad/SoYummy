@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="isLoggedIn ? '/main' : '/'">
+    <div @click="navigate">
         <svg
             :width="size"
             :height="size"
@@ -30,13 +30,11 @@
                 stroke-linejoin="round"
             />
         </svg>
-    </router-link>
+    </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-
-const isLoggedIn = computed(() => !!localStorage.getItem('token'))
+import { useRouter } from 'vue-router'
 
 defineProps({
     backgroundColor: {
@@ -53,4 +51,22 @@ defineProps({
         required: true,
     },
 })
+
+const router = useRouter()
+
+const navigate = () => {
+    const currentPath = router.currentRoute.value.path
+
+    if (currentPath === '/') {
+        return
+    }
+
+    router.push('/main')
+}
 </script>
+
+<style lang="scss" scoped>
+div {
+    cursor: pointer;
+}
+</style>
