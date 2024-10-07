@@ -121,6 +121,8 @@ button {
     border-radius: 6px;
     padding: 20px 40px;
 
+    font-size: 1rem;
+
     @media (min-width: 768px) {
         padding: 22px 44px;
     }
