@@ -68,5 +68,10 @@ const navigate = () => {
 <style lang="scss" scoped>
 div {
     cursor: pointer;
+    height: 32px;
+
+    @media (min-width: 768px) {
+        height: 44px;
+    }
 }
 </style>
