@@ -8,6 +8,8 @@ import App from './App.vue'
 import HomePage from './components/pages/HomePage.vue'
 import Register from './components/pages/Register.vue'
 import Login from './components/pages/Login.vue'
+
+import SharedLayout from './components/pages/SharedLayout.vue'
 import MainPage from './components/pages/MainPage.vue'
 import NotFound from './components/pages/NotFound.vue'
 
@@ -19,13 +21,16 @@ const router = createRouter({
         { path: '/login', component: Login, meta: { title: 'Login' } },
         {
             path: '/main',
-            component: MainPage,
-            meta: { title: 'Main Page', requiresAuth: true },
-        },
-        {
-            path: '/:pathMatch(.*)*',
-            component: NotFound,
-            meta: { title: '404' },
+            component: SharedLayout,
+            meta: { requiresAuth: true },
+            children: [
+                { path: '', component: MainPage, meta: { title: 'Main Page' } },
+                {
+                    path: '/:pathMatch(.*)*',
+                    component: NotFound,
+                    meta: { title: '404' },
+                },
+            ],
         },
     ],
 })
