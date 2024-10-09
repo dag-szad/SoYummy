@@ -1,10 +1,10 @@
 <template>
     <div class="header">
         <logo :size="logoSize"></logo>
-        <navigation />
+        <navigation :isNavOpen="isNavOpen" @closeNav="toggleNav" />
         <div class="header__actions">
             <profile></profile>
-            <svg class="header__icon">
+            <svg class="header__icon" @click="toggleNav">
                 <use href="../../assets/icons/icons.svg#menu-icon"></use>
             </svg>
             <toggle-theme class="header__toggle" />
@@ -13,13 +13,15 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+
 import Logo from './Logo.vue'
 import Profile from './Profile.vue'
 import Navigation from './Navigation.vue'
 import toggleTheme from './toggleTheme.vue'
-import { ref, onMounted, onUnmounted, computed } from 'vue'
 
 const windowWidth = ref(window.innerWidth)
+const isNavOpen = ref(false)
 
 const updateWindowWidth = () => {
     windowWidth.value = window.innerWidth
@@ -36,6 +38,10 @@ onUnmounted(() => {
 const logoSize = computed(() => {
     return windowWidth.value < 768 ? 40 : 44
 })
+
+const toggleNav = () => {
+    isNavOpen.value = !isNavOpen.value
+}
 </script>
 
 <style scoped lang="scss">
@@ -56,6 +62,7 @@ const logoSize = computed(() => {
     }
 
     &__icon {
+        cursor: pointer;
         display: flex;
 
         @media (min-width: 1100px) {
