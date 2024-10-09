@@ -214,8 +214,8 @@ const getValidationClass = (error: string, field: string) => {
     padding: 25px 30px;
     width: 100%;
 
-    color: var(--main-white);
-    background-color: var(--grey-form);
+    color: var(--auth-txt);
+    background-color: var(--auth-bg);
 
     border-radius: 30px;
 
@@ -249,16 +249,16 @@ const getValidationClass = (error: string, field: string) => {
         padding: 16px 18px;
 
         border-radius: 5px;
-        border: 1px solid var(--grey-form-border);
+        border: 1px solid var(--auth-form-border);
 
         transition: border-color 0.3s ease-in-out;
 
         &:hover,
         &:active,
         &:focus-within {
-            border-color: var(--main-white);
+            border-color: var(--auth-txt);
             .input__icon {
-                color: var(--main-white);
+                color: var(--auth-txt);
             }
         }
 
@@ -284,7 +284,7 @@ const getValidationClass = (error: string, field: string) => {
         height: 24px;
 
         transition: color 0.3s ease-in-out;
-        color: var(--grey);
+        color: var(--auth-form-border);
     }
 
     input {
@@ -292,7 +292,7 @@ const getValidationClass = (error: string, field: string) => {
         outline: none;
         background: transparent;
 
-        color: var(--main-white);
+        color: var(--auth-txt);
         flex: 1;
     }
 
@@ -306,11 +306,12 @@ const getValidationClass = (error: string, field: string) => {
 }
 
 .link {
-    color: var(--main-white);
+    color: var(--auth-txt);
     transition: color 0.3s ease-in-out;
+    text-decoration: underline;
 
     &:hover {
-        color: var(--main-green-hover);
+        color: var(--main-accent-hover);
     }
 }
 </style>
