@@ -65,7 +65,7 @@ const logoSize = computed(() => {
     align-items: center;
     gap: 40px;
 
-    color: var(--main-white);
+    color: var(--main-txt);
 
     height: 100vh;
 
