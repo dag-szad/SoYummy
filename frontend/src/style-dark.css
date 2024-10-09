@@ -7,18 +7,28 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    --dark-grey: #22252a;
-    --dark-grey-hover: #3a3c41;
-    --grey-form: #2a2c36;
-    --grey-form-border: #5d5f64;
-    --grey: #bdbdbd;
-    --light-grey: #d9d9d9;
-    --main-white: #fafafa;
-    --white: #fff;
+    --main-bg: #22252a;
+    --main-txt: #fafafa;
+    --main-accent: #8baa36;
+    --main-accent-hover: #a1c04c;
 
-    --main-green: #8baa36;
-    --main-green-hover: #a1c04c;
-    --secondary-green: #ebf3d4;
+    --log-reg-bg: #22252a;
+    --log-reg-shape: #fafafa;
+    --auth-bg: #2a2c36;
+    --auth-txt: #fafafa;
+    --auth-form-border: #fafafa80;
+
+    --nav-background: #22252a;
+
+    --footer-bg: #8baa36;
+    --footer-txt: #fafafa;
+    --footer-txt-hov: #fafafa;
+    --footer-form-border: #fafafa80;
+
+    --social-col: #fafafa;
+    --social-col-hover: #fafafa;
+
+    --addon-txt: #fafafa80;
 
     --alert-yellow: #f6c23e;
     --error-red: #e74a3b;
