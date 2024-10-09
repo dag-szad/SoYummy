@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="shared-layout">
         <header>
             <header-component></header-component>
         </header>
@@ -19,4 +19,8 @@ import HeaderComponent from '../templates/HeaderComponent.vue'
 import FooterComponent from '../templates/FooterComponent.vue'
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.shared-layout {
+    background-color: var(--main-bg);
+}
+</style>

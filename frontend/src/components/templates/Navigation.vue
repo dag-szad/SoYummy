@@ -45,7 +45,7 @@
                 </li>
             </ul>
         </nav>
-        <toggle-theme class="nav__toggle" />
+        <theme-toggle class="nav__toggle" />
     </div>
 </template>
 
@@ -60,7 +60,7 @@ import {
 } from 'vue'
 
 import Logo from './Logo.vue'
-import toggleTheme from './toggleTheme.vue'
+import ThemeToggle from './ThemeToggle.vue'
 
 defineProps({
     isNavOpen: {
@@ -96,7 +96,7 @@ const closeNav = () => {
 
 <style scoped lang="scss">
 .nav {
-    background-color: var(--secondary-green);
+    background-color: var(--nav-background);
     background-image: url('../../assets/images/background/background-1.png');
     background-repeat: no-repeat;
     background-position: bottom right;
@@ -117,6 +117,8 @@ const closeNav = () => {
     opacity: 0;
     transform: translateX(100%);
     transition: all 0.3s ease-in-out;
+
+    color: var(--main-txt);
 
     &--open {
         pointer-events: auto;
@@ -146,7 +148,7 @@ const closeNav = () => {
 
     &__icon {
         cursor: pointer;
-        stroke: var(--dark-grey);
+        stroke: var(--main-txt);
         width: 30px;
         height: 30px;
 
@@ -170,10 +172,10 @@ const closeNav = () => {
             transition: color 0.3s ease-in-out;
 
             &:hover {
-                color: var(--main-green);
+                color: var(--main-accent);
 
                 .search__icon {
-                    stroke: var(--main-green);
+                    stroke: var(--main-accent);
                 }
             }
         }
@@ -205,7 +207,7 @@ const closeNav = () => {
 
     &__icon {
         fill: none;
-        stroke: var(--dark-grey);
+        stroke: var(--main-txt);
         width: 20px;
         height: 20px;
 

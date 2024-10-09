@@ -27,6 +27,7 @@
     &__username {
         font-size: 0.75rem;
         font-weight: 600;
+        color: var(--main-txt);
 
         @media (min-width: 768px) {
             font-size: 0.875rem;

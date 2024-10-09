@@ -36,7 +36,7 @@ import AuthForm from '../templates/AuthForm.vue'
 
     height: 100vh;
 
-    background: var(--dark-grey);
+    background: var(--log-reg-bg);
 
     &__container {
         position: relative;
@@ -75,7 +75,7 @@ import AuthForm from '../templates/AuthForm.vue'
     height: 100%;
     clip-path: polygon(0 0, 100% 0, 100% 45%, 60% 55%, 40% 55%, 0 45%);
 
-    background-color: var(--main-white);
+    background-color: var(--log-reg-shape);
 
     transition: clip-path 0.3s ease-in-out;
 

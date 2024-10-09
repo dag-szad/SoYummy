@@ -92,7 +92,7 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 .section {
-    background-color: var(--dark-grey);
+    background-color: var(--footer-bg);
     padding: 28px;
 
     display: flex;
@@ -116,7 +116,7 @@ onBeforeUnmount(() => {
     align-items: center;
     gap: 32px;
 
-    color: var(--main-white);
+    color: var(--footer-txt);
 
     @media (min-width: 768px) {
         display: grid;
@@ -203,7 +203,7 @@ onBeforeUnmount(() => {
             transition: color 0.3s ease-in-out;
 
             &:hover {
-                color: var(--main-green);
+                color: var(--footer-txt-hover);
             }
         }
     }
@@ -260,16 +260,16 @@ onBeforeUnmount(() => {
         height: 40px;
 
         border-radius: 5px;
-        border: 1px solid var(--grey-form-border);
+        border: 1px solid var(--footer-form-border);
 
         transition: border-color 0.3s ease-in-out;
 
         &:hover,
         &:active,
         &:focus-within {
-            border-color: var(--main-white);
+            border-color: var(--footer-txt);
             .input__icon {
-                color: var(--main-white);
+                color: var(--footer-txt);
             }
         }
 
@@ -286,7 +286,7 @@ onBeforeUnmount(() => {
             outline: none;
             background: transparent;
 
-            color: var(--main-white);
+            color: var(--footer-txt);
             flex: 1;
         }
     }
@@ -298,7 +298,7 @@ onBeforeUnmount(() => {
         height: 24px;
 
         transition: color 0.3s ease-in-out;
-        color: var(--grey);
+        color: var(--footer-form-border);
     }
 
     &__button {
@@ -307,8 +307,8 @@ onBeforeUnmount(() => {
         border: none;
         border-radius: 5px;
 
-        background-color: var(--main-green);
-        color: var(--main-white);
+        background-color: var(--main-accent);
+        color: var(--footer-txt);
         font-size: 0.875rem;
 
         padding: 11px 67px;
@@ -317,7 +317,7 @@ onBeforeUnmount(() => {
         transition: background-color 0.3s ease-in-out;
 
         &:hover {
-            background-color: var(--main-green-hover);
+            background-color: var(--main-accent-hover);
         }
 
         @media (min-width: 768px) {
@@ -337,7 +337,7 @@ onBeforeUnmount(() => {
     justify-content: center;
     gap: 14px;
 
-    color: var(--grey-form-border);
+    color: var(--addon-txt);
     font-size: 0.625rem;
 
     padding: 28px;
@@ -349,11 +349,11 @@ onBeforeUnmount(() => {
     }
 
     a {
-        color: var(--main-green);
+        color: var(--main-accent);
         transition: color 0.3s ease-in-out;
 
         &:hover {
-            color: var(--main-green-hover);
+            color: var(--main-accent-hover);
         }
     }
 
