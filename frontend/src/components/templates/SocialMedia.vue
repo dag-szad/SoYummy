@@ -46,14 +46,14 @@
         transition: fill 0.3s ease-in-out;
 
         &:hover .social__icon {
-            fill: var(--main-green-hover);
+            fill: var(--social-col-hover);
         }
     }
 
     &__icon {
         width: 20px;
         height: 20px;
-        fill: var(--main-green);
+        fill: var(--social-col);
         cursor: pointer;
         transition: fill 0.3s ease-in-out;
     }
