@@ -82,6 +82,6 @@ const toggleNav = () => {
 .header__icon {
     width: 28px;
     height: 28px;
-    stroke: var(--dark-grey);
+    stroke: var(--main-txt);
 }
 </style>
