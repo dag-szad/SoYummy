@@ -52,7 +52,7 @@ const emitThemeChange = () => {
         visibility: hidden;
 
         &:checked + .toggle {
-            background-color: var(--main-green);
+            background-color: #8baa36;
         }
         &:checked + .toggle:after {
             left: 33px;
