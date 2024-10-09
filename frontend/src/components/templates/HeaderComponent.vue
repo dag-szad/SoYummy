@@ -7,7 +7,7 @@
             <svg class="header__icon" @click="toggleNav">
                 <use href="../../assets/icons/icons.svg#menu-icon"></use>
             </svg>
-            <toggle-theme class="header__toggle" />
+            <theme-toggle class="header__toggle" />
         </div>
     </div>
 </template>
@@ -18,7 +18,7 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 import Logo from './Logo.vue'
 import Profile from './Profile.vue'
 import Navigation from './Navigation.vue'
-import toggleTheme from './toggleTheme.vue'
+import ThemeToggle from './ThemeToggle.vue'
 
 const windowWidth = ref(window.innerWidth)
 const isNavOpen = ref(false)

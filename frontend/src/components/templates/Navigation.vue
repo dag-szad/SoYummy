@@ -45,7 +45,7 @@
                 </li>
             </ul>
         </nav>
-        <toggle-theme class="nav__toggle" />
+        <theme-toggle class="nav__toggle" />
     </div>
 </template>
 
@@ -60,7 +60,7 @@ import {
 } from 'vue'
 
 import Logo from './Logo.vue'
-import toggleTheme from './toggleTheme.vue'
+import ThemeToggle from './ThemeToggle.vue'
 
 defineProps({
     isNavOpen: {
