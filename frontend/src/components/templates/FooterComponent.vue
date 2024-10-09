@@ -198,6 +198,14 @@ onBeforeUnmount(() => {
             align-items: flex-start;
             gap: 20px;
         }
+
+        a {
+            transition: color 0.3s ease-in-out;
+
+            &:hover {
+                color: var(--main-green);
+            }
+        }
     }
 
     &__newsletter {
