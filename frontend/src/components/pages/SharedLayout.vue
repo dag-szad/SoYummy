@@ -22,5 +22,6 @@ import FooterComponent from '../templates/FooterComponent.vue'
 <style lang="scss" scoped>
 .shared-layout {
     background-color: var(--main-bg);
+    transition: background-color 0.3s ease-in-out;
 }
 </style>
