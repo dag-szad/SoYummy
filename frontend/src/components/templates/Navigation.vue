@@ -40,12 +40,12 @@
                                 href="../../assets/icons/icons.svg#search-icon"
                             ></use>
                         </svg>
-                        <p class="search__text">Search</p>
+                        <p>Search</p>
                     </router-link>
                 </li>
             </ul>
         </nav>
-        <theme-toggle class="nav__toggle" />
+        <theme-toggle />
     </div>
 </template>
 
@@ -110,12 +110,11 @@ const closeNav = () => {
     flex-direction: column;
     justify-content: space-between;
 
-    padding: 18px 16px;
+    padding: 21px 16px;
 
     pointer-events: none;
     visibility: hidden;
     opacity: 0;
-    transform: translateX(100%);
     transition: all 0.3s ease-in-out;
 
     color: var(--main-txt);
@@ -124,26 +123,12 @@ const closeNav = () => {
         pointer-events: auto;
         visibility: visible;
         opacity: 1;
-        transform: translateX(0);
-    }
-
-    @media (min-width: 1100px) {
-        padding: 0;
-
-        position: relative;
-        inset: unset;
-
-        background: none;
     }
 
     &__header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-
-        @media (min-width: 1100px) {
-            display: none;
-        }
     }
 
     &__icon {
@@ -212,12 +197,6 @@ const closeNav = () => {
         height: 20px;
 
         transition: stroke 0.3s ease-in-out;
-    }
-
-    &__text {
-        @media (min-width: 1100px) {
-            display: none;
-        }
     }
 }
 </style>

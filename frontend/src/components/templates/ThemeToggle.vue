@@ -36,7 +36,7 @@ const toggleTheme = inject('toggleTheme') as () => void
         height: 22px;
         position: absolute;
         top: 4px;
-        left: 4px;
+        left: 5px;
         background-color: #fff;
         border-radius: 50%;
         transition: 0.2s ease-in-out;
