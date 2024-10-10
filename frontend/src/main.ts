@@ -1,8 +1,7 @@
-import { createApp } from 'vue'
+import { createApp, ref } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 import App from './App.vue'
-
 import HomePage from './components/pages/HomePage.vue'
 import Register from './components/pages/Register.vue'
 import Login from './components/pages/Login.vue'
@@ -25,7 +24,16 @@ const setTheme = (theme: string) => {
 }
 
 const initialTheme = localStorage.getItem('theme') || 'light'
+const theme = ref(initialTheme)
 setTheme(initialTheme)
+
+const toggleTheme = () => {
+    theme.value = theme.value === 'light' ? 'dark' : 'light'
+    localStorage.setItem('theme', theme.value)
+    setTheme(theme.value)
+}
+
+document.addEventListener('themeChange', toggleTheme)
 
 const router = createRouter({
     history: createWebHistory(),
@@ -63,15 +71,10 @@ router.beforeEach((to, _from, next) => {
     }
 })
 
-const toggleTheme = () => {
-    const currentTheme = localStorage.getItem('theme') || 'light'
-    const newTheme = currentTheme === 'light' ? 'dark' : 'light'
-    localStorage.setItem('theme', newTheme)
-    setTheme(newTheme)
-}
-
-document.addEventListener('themeChange', toggleTheme)
-
 const app = createApp(App)
+
+app.provide('theme', theme)
+app.provide('toggleTheme', toggleTheme)
+
 app.use(router)
 app.mount('#app')
