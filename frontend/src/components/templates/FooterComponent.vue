@@ -93,6 +93,8 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 .section {
     background-color: var(--footer-bg);
+    transition: background-color 0.3s ease-in-out;
+
     padding: 28px;
 
     display: flex;
@@ -117,6 +119,7 @@ onBeforeUnmount(() => {
     gap: 32px;
 
     color: var(--footer-txt);
+    transition: color 0.3s ease-in-out;
 
     @media (min-width: 768px) {
         display: grid;
@@ -338,6 +341,7 @@ onBeforeUnmount(() => {
     gap: 14px;
 
     color: var(--addon-txt);
+    transition: color 0.3s ease-in-out;
     font-size: 0.625rem;
 
     padding: 28px;
