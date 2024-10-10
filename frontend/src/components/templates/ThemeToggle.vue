@@ -4,7 +4,7 @@
             type="checkbox"
             id="darkmode-toggle"
             class="toggle__input"
-            @change="emitThemeChange"
+            @change="toggleTheme"
             :checked="theme === 'dark'"
         />
         <label for="darkmode-toggle" class="toggle"></label>
@@ -12,14 +12,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { inject, Ref } from 'vue'
 
-const theme = ref(localStorage.getItem('theme') || 'light')
-
-const emitThemeChange = () => {
-    const event = new Event('themeChange')
-    document.dispatchEvent(event)
-}
+const theme = inject('theme') as Ref<string>
+const toggleTheme = inject('toggleTheme') as () => void
 </script>
 
 <style lang="scss" scoped>
@@ -30,7 +26,7 @@ const emitThemeChange = () => {
     display: block;
     background-color: #efefef;
     border-radius: 15px;
-    box-shadow: inset 0px 5px 15px -5px rgba($color: #000000, $alpha: 0.4);
+    box-shadow: inset 0px 5px 15px -5px rgba(0, 0, 0, 0.4);
     cursor: pointer;
     transition: 0.2s ease-in-out;
 
