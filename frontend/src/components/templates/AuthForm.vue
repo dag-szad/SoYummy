@@ -71,15 +71,9 @@
                     {{ passwordError }}
                 </p>
 
-                <main-button
-                    :button-title="buttonTitle"
-                    shape="square"
-                    type="green"
-                    theme="light"
-                    size="large"
-                    aria-label="Submit the form"
-                    class="input__button"
-                ></main-button>
+                <button aria-label="Submit the form" class="input__button">
+                    {{ buttonTitle }}
+                </button>
 
                 <p v-if="errorMessage" class="input__error">
                     {{ errorMessage }}
@@ -103,7 +97,6 @@
 import { computed, defineProps, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
-import MainButton from './MainButton.vue'
 
 const router = useRouter()
 
@@ -302,6 +295,20 @@ const getValidationClass = (error: string, field: string) => {
 
     &__button {
         margin-top: 10px;
+        height: 57px;
+
+        font-size: 0.875rem;
+        color: var(--auth-txt);
+
+        background-color: var(--auth-btn);
+        border-radius: 5px;
+        border: none;
+
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            background-color: var(--auth-btn-hover);
+        }
     }
 }
 
