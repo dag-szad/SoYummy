@@ -310,7 +310,7 @@ onBeforeUnmount(() => {
         border: none;
         border-radius: 5px;
 
-        background-color: var(--main-accent);
+        background-color: var(--footer-btn);
         color: var(--footer-txt);
         font-size: 0.875rem;
 
@@ -320,7 +320,7 @@ onBeforeUnmount(() => {
         transition: background-color 0.3s ease-in-out;
 
         &:hover {
-            background-color: var(--main-accent-hover);
+            background-color: var(--footer-btn-hover);
         }
 
         @media (min-width: 768px) {
