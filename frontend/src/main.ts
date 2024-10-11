@@ -1,15 +1,39 @@
-import { createApp } from 'vue'
+import { createApp, ref } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
-import './style.css'
-
 import App from './App.vue'
-
 import HomePage from './components/pages/HomePage.vue'
 import Register from './components/pages/Register.vue'
 import Login from './components/pages/Login.vue'
+import SharedLayout from './components/pages/SharedLayout.vue'
 import MainPage from './components/pages/MainPage.vue'
 import NotFound from './components/pages/NotFound.vue'
+
+const setTheme = (theme: string) => {
+    const existingLink = document.getElementById('theme-style')
+    if (existingLink) {
+        document.head.removeChild(existingLink)
+    }
+
+    const linkElement = document.createElement('link')
+    linkElement.id = 'theme-style'
+    linkElement.rel = 'stylesheet'
+    linkElement.href =
+        theme === 'dark' ? '/src/style-dark.css' : '/src/style-light.css'
+    document.head.appendChild(linkElement)
+}
+
+const initialTheme = localStorage.getItem('theme') || 'light'
+const theme = ref(initialTheme)
+setTheme(initialTheme)
+
+const toggleTheme = () => {
+    theme.value = theme.value === 'light' ? 'dark' : 'light'
+    localStorage.setItem('theme', theme.value)
+    setTheme(theme.value)
+}
+
+document.addEventListener('themeChange', toggleTheme)
 
 const router = createRouter({
     history: createWebHistory(),
@@ -19,19 +43,22 @@ const router = createRouter({
         { path: '/login', component: Login, meta: { title: 'Login' } },
         {
             path: '/main',
-            component: MainPage,
-            meta: { title: 'Main Page', requiresAuth: true },
-        },
-        {
-            path: '/:pathMatch(.*)*',
-            component: NotFound,
-            meta: { title: '404' },
+            component: SharedLayout,
+            meta: { requiresAuth: true },
+            children: [
+                { path: '', component: MainPage, meta: { title: 'Main Page' } },
+                {
+                    path: '/:pathMatch(.*)*',
+                    component: NotFound,
+                    meta: { title: '404' },
+                },
+            ],
         },
     ],
 })
 
 router.beforeEach((to, _from, next) => {
-    const title = 'SoYummy | ' + to.meta.title || 'SoYummy'
+    const title = 'SoYummy | ' + (to.meta.title || 'SoYummy')
     document.title = title
 
     const isLoggedIn = !!localStorage.getItem('token')
@@ -45,5 +72,9 @@ router.beforeEach((to, _from, next) => {
 })
 
 const app = createApp(App)
+
+app.provide('theme', theme)
+app.provide('toggleTheme', toggleTheme)
+
 app.use(router)
 app.mount('#app')

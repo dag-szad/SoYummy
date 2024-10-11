@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import Logo from '../templates/Logo.vue'
-import MainButton from '../templates/MainButton.vue'
-
 import { ref, onMounted, onUnmounted, computed } from 'vue'
+import Logo from '../templates/Logo.vue'
 
 const windowWidth = ref(window.innerWidth)
 
@@ -36,22 +34,10 @@ const logoSize = computed(() => {
         </div>
         <div class="home__buttons">
             <router-link to="/register">
-                <main-button
-                    button-title="Registration"
-                    type="green"
-                    shape="round"
-                    theme="light"
-                    size="small"
-                />
+                <button class="home__button-green">Registration</button>
             </router-link>
             <router-link to="/login">
-                <main-button
-                    button-title="Login"
-                    type="transparent"
-                    shape="round"
-                    theme="light"
-                    size="small"
-                />
+                <button class="home__button-transparent">Sign in</button>
             </router-link>
         </div>
     </div>
@@ -65,7 +51,7 @@ const logoSize = computed(() => {
     align-items: center;
     gap: 40px;
 
-    color: var(--main-white);
+    color: var(--home-txt);
 
     height: 100vh;
 
@@ -138,6 +124,58 @@ const logoSize = computed(() => {
 
         @media (min-width: 768px) {
             gap: 18px;
+        }
+    }
+
+    &__button {
+        &-green {
+            cursor: pointer;
+
+            padding: 12px 24px;
+
+            border-radius: 24px 44px;
+            border: 2px solid var(--home-btn);
+
+            font-size: 0.875rem;
+            color: var(--home-txt);
+
+            background-color: var(--home-btn);
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+                background-color: var(--home-btn-hover);
+                border-color: var(--home-btn-hover);
+            }
+
+            @media (min-width: 768px) {
+                font-size: 1rem;
+                padding: 22px 44px;
+            }
+        }
+
+        &-transparent {
+            cursor: pointer;
+
+            padding: 12px 24px;
+
+            border-radius: 24px 44px;
+            border: 2px solid var(--home-txt);
+
+            font-size: 0.875rem;
+            color: var(--home-txt);
+
+            background-color: transparent;
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+                background-color: var(--home-btn);
+                border-color: var(--home-btn);
+            }
+
+            @media (min-width: 768px) {
+                font-size: 1rem;
+                padding: 22px 44px;
+            }
         }
     }
 }

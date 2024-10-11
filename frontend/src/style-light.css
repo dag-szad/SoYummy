@@ -1,0 +1,78 @@
+:root {
+    font-family: Poppins, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    --main-bg: #fafafa;
+    --main-txt: #22252a;
+    --main-accent: #8baa36;
+    --main-accent-hover: #a1c04c;
+
+    --home-txt: #fafafa;
+    --home-btn: #8baa36;
+    --home-btn-hover: #a1c04c;
+
+    --log-reg-bg: #22252a;
+    --log-reg-shape: #fafafa;
+    --auth-bg: #2a2c36;
+    --auth-txt: #fafafa;
+    --auth-form-border: #fafafa80;
+    --auth-btn: #8baa36;
+    --auth-btn-hover: #a1c04c;
+
+    --nav-background: #ebf3d4;
+
+    --footer-bg: #22252a;
+    --footer-txt: #fafafa;
+    --footer-txt-hov: #a1c04c;
+    --footer-form-border: #fafafa80;
+    --footer-btn: #8baa36;
+    --footer-btn-hover: #a1c04c;
+
+    --social-col: #8baa36;
+    --social-col-hover: #a1c04c;
+
+    --addon-txt: #22252a80;
+
+    --alert-yellow: #f6c23e;
+    --error-red: #e74a3b;
+    --correct-green: #78af49;
+}
+
+body {
+    margin: 0;
+}
+
+h1,
+h2,
+h3 {
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+::-moz-selection {
+    color: var(--main-white);
+    background: var(--main-green);
+}
+
+::selection {
+    color: var(--main-white);
+    background: var(--main-green);
+}

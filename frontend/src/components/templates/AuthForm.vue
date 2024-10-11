@@ -1,79 +1,95 @@
 <template>
-    <div class="form">
-        <h1 class="form__title">{{ formTitle }}</h1>
-        <form @submit.prevent="handleSubmit" class="input">
-            <div
-                :class="[
-                    'input__container',
-                    getValidationClass(usernameError, username),
-                ]"
-                v-if="isRegister"
-            >
-                <svg class="input__icon">
-                    <use href="../../assets/icons/icons.svg#user-icon"></use>
-                </svg>
-                <input
-                    id="username"
-                    type="text"
-                    v-model="username"
-                    @input="validate('username')"
-                    placeholder="Name"
-                />
+    <div class="layout">
+        <div class="form">
+            <h1 class="form__title">{{ formTitle }}</h1>
+            <form @submit.prevent="handleSubmit" class="input">
+                <div
+                    :class="[
+                        'input__container',
+                        getValidationClass(usernameError, username),
+                    ]"
+                    v-if="isRegister"
+                >
+                    <svg class="input__icon">
+                        <use
+                            href="../../assets/icons/icons.svg#user-icon"
+                        ></use>
+                    </svg>
+                    <input
+                        id="username"
+                        type="text"
+                        v-model="username"
+                        @input="validate('username')"
+                        placeholder="Name"
+                    />
+                </div>
+                <p v-if="usernameError" class="input__error">
+                    {{ usernameError }}
+                </p>
+
+                <div
+                    :class="[
+                        'input__container',
+                        getValidationClass(emailError, email),
+                    ]"
+                >
+                    <svg class="input__icon">
+                        <use
+                            href="../../assets/icons/icons.svg#mail-icon"
+                        ></use>
+                    </svg>
+                    <input
+                        id="email"
+                        type="email"
+                        v-model="email"
+                        @blur="validate('email')"
+                        placeholder="Email"
+                    />
+                </div>
+                <p v-if="emailError" class="input__error">{{ emailError }}</p>
+
+                <div
+                    :class="[
+                        'input__container',
+                        getValidationClass(passwordError, password),
+                    ]"
+                >
+                    <svg class="input__icon">
+                        <use
+                            href="../../assets/icons/icons.svg#password-icon"
+                        ></use>
+                    </svg>
+                    <input
+                        id="password"
+                        type="password"
+                        v-model="password"
+                        @input="validate('password')"
+                        placeholder="Password"
+                    />
+                </div>
+                <p v-if="passwordError" class="input__error">
+                    {{ passwordError }}
+                </p>
+
+                <button aria-label="Submit the form" class="input__button">
+                    {{ buttonTitle }}
+                </button>
+
+                <p v-if="errorMessage" class="input__error">
+                    {{ errorMessage }}
+                </p>
+            </form>
+        </div>
+        <div>
+            <div v-if="isRegister">
+                <router-link class="link" to="/login"> Sign in </router-link>
             </div>
-            <p v-if="usernameError" class="input__error">{{ usernameError }}</p>
-
-            <div
-                :class="[
-                    'input__container',
-                    getValidationClass(emailError, email),
-                ]"
-            >
-                <svg class="input__icon">
-                    <use href="../../assets/icons/icons.svg#mail-icon"></use>
-                </svg>
-                <input
-                    id="email"
-                    type="email"
-                    v-model="email"
-                    @blur="validate('email')"
-                    placeholder="Email"
-                />
+            <div v-else>
+                <router-link class="link" to="/register">
+                    Registration
+                </router-link>
             </div>
-            <p v-if="emailError" class="input__error">{{ emailError }}</p>
-
-            <div
-                :class="[
-                    'input__container',
-                    getValidationClass(passwordError, password),
-                ]"
-            >
-                <svg class="input__icon">
-                    <use
-                        href="../../assets/icons/icons.svg#password-icon"
-                    ></use>
-                </svg>
-                <input
-                    id="password"
-                    type="password"
-                    v-model="password"
-                    @input="validate('password')"
-                    placeholder="Password"
-                />
-            </div>
-            <p v-if="passwordError" class="input__error">{{ passwordError }}</p>
-
-            <main-button
-                :button-title="buttonTitle"
-                shape="square"
-                type="green"
-                theme="light"
-                size="large"
-                aria-label="Submit the form"
-                class="input__button"
-            ></main-button>
-
-            <p v-if="errorMessage" class="input__error">{{ errorMessage }}</p>
-        </form>
+        </div>
     </div>
 </template>
 
@@ -81,7 +97,6 @@
 import { computed, defineProps, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
-import MainButton from './MainButton.vue'
 
 const router = useRouter()
 
@@ -171,21 +186,34 @@ const getValidationClass = (error: string, field: string) => {
 </script>
 
 <style lang="scss" scoped>
+.layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+
+    width: 100%;
+    max-width: 300px;
+
+    @media (min-width: 768px) {
+        max-width: 410px;
+    }
+}
 .form {
     display: flex;
     flex-direction: column;
     gap: 20px;
 
-    padding: 28px 32px;
+    padding: 25px 30px;
     width: 100%;
 
-    color: var(--main-white);
-    background-color: var(--grey-form);
+    color: var(--auth-txt);
+    background-color: var(--auth-bg);
 
     border-radius: 30px;
 
     @media (min-width: 768px) {
-        margin: 0;
+        padding: 45px 50px;
     }
 
     &__title {
@@ -214,16 +242,16 @@ const getValidationClass = (error: string, field: string) => {
         padding: 16px 18px;
 
         border-radius: 5px;
-        border: 1px solid var(--grey-form-border);
+        border: 1px solid var(--auth-form-border);
 
         transition: border-color 0.3s ease-in-out;
 
         &:hover,
         &:active,
         &:focus-within {
-            border-color: var(--main-white);
+            border-color: var(--auth-txt);
             .input__icon {
-                color: var(--main-white);
+                color: var(--auth-txt);
             }
         }
 
@@ -249,7 +277,7 @@ const getValidationClass = (error: string, field: string) => {
         height: 24px;
 
         transition: color 0.3s ease-in-out;
-        color: var(--grey);
+        color: var(--auth-form-border);
     }
 
     input {
@@ -257,7 +285,7 @@ const getValidationClass = (error: string, field: string) => {
         outline: none;
         background: transparent;
 
-        color: var(--main-white);
+        color: var(--auth-txt);
         flex: 1;
     }
 
@@ -267,6 +295,30 @@ const getValidationClass = (error: string, field: string) => {
 
     &__button {
         margin-top: 10px;
+        height: 57px;
+
+        font-size: 0.875rem;
+        color: var(--auth-txt);
+
+        background-color: var(--auth-btn);
+        border-radius: 5px;
+        border: none;
+
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            background-color: var(--auth-btn-hover);
+        }
+    }
+}
+
+.link {
+    color: var(--auth-txt);
+    transition: color 0.3s ease-in-out;
+    text-decoration: underline;
+
+    &:hover {
+        color: var(--main-accent-hover);
     }
 }
 </style>

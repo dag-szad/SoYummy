@@ -4,6 +4,7 @@
             <img
                 src="/src/assets/images/loginRegister/login-mobile@1x.png"
                 alt="Login page image"
+                class="login__image"
                 :srcset="`
                     /src/assets/images/loginRegister/login-mobile@1x.png 250w,
                     /src/assets/images/loginRegister/login-mobile@2x.png 500w,
@@ -17,12 +18,7 @@
                 (min-width: 1200px) 500px, 
                 100vw"
             />
-            <div class="login__form">
-                <auth-form destination="login" />
-                <router-link class="link" to="/register">
-                    Registration
-                </router-link>
-            </div>
+            <auth-form destination="login" />
         </div>
     </div>
     <div class="trapezoid"></div>
@@ -40,7 +36,7 @@ import AuthForm from '../templates/AuthForm.vue'
 
     height: 100vh;
 
-    background: var(--dark-grey);
+    background: var(--log-reg-bg);
 
     &__container {
         position: relative;
@@ -58,21 +54,15 @@ import AuthForm from '../templates/AuthForm.vue'
         }
     }
 
-    &__form {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 18px;
-    }
-}
+    &__image {
+        width: 250px;
 
-.link {
-    color: var(--main-white);
-    transition: color 0.3s ease-in-out;
-
-    &:hover {
-        color: var(--main-green-hover);
+        @media (min-width: 768px) {
+            width: 410px;
+        }
+        @media (min-width: 1200px) {
+            width: 500px;
+        }
     }
 }
 
@@ -85,7 +75,7 @@ import AuthForm from '../templates/AuthForm.vue'
     height: 100%;
     clip-path: polygon(0 0, 100% 0, 100% 45%, 60% 55%, 40% 55%, 0 45%);
 
-    background-color: var(--main-white);
+    background-color: var(--log-reg-shape);
 
     transition: clip-path 0.3s ease-in-out;
 
