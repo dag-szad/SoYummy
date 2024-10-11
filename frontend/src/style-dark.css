@@ -12,11 +12,17 @@
     --main-accent: #8baa36;
     --main-accent-hover: #a1c04c;
 
+    --home-txt: #fafafa;
+    --home-btn: #8baa36;
+    --home-btn-hover: #a1c04c;
+
     --log-reg-bg: #22252a;
     --log-reg-shape: #fafafa;
     --auth-bg: #2a2c36;
     --auth-txt: #fafafa;
     --auth-form-border: #fafafa80;
+    --auth-btn: #8baa36;
+    --auth-btn-hover: #a1c04c;
 
     --nav-background: #22252a;
 
@@ -24,6 +30,8 @@
     --footer-txt: #fafafa;
     --footer-txt-hov: #fafafa;
     --footer-form-border: #fafafa80;
+    --footer-btn: #1e1f28;
+    --footer-btn-hover: #363741;
 
     --social-col: #fafafa;
     --social-col-hover: #fafafa;
