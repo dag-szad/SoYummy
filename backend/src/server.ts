@@ -190,6 +190,24 @@ app.post(
 
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
 
+// Zmiana nazwy
+app.post('/update-username', async (req: Request, res: Response): Promise<void> => {
+    const { username, userId } = req.body;
+
+    if (!username) {
+        res.status(400).json({ message: 'Username is required' });
+    }
+
+    try {
+        await User.findByIdAndUpdate(userId, { username }, { new: true });
+
+        res.status(200).json({ message: 'Username updated successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+})
+
 // Testowy endpoint
 app.get('/', (req: Request, res: Response): void => {
     res.send('<h1>Hello from backend!</h1>')
