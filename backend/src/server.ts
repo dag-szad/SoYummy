@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express'
+import multer, { StorageEngine } from 'multer'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import cors from 'cors'
@@ -6,6 +7,7 @@ import cors from 'cors'
 import connectDB from './database'
 import Blacklist from './models/Blacklist'
 import User from './models/User'
+import path from 'path'
 
 const port: number = 3000
 const app: express.Application = express()
@@ -113,6 +115,80 @@ app.post('/logout', async (req: Request, res: Response): Promise<void> => {
         res.status(500).json({ message: 'Server error' })
     }
 })
+
+// Upload zdjęcia profilowego
+const storage: StorageEngine = multer.diskStorage({
+    destination: (
+        req: Request,
+        file: Express.Multer.File,
+        cb: (error: any, destination: string) => void
+    ) => {
+        cb(null, path.join(__dirname, '../uploads'))
+    },
+    filename: (
+        req: Request,
+        file: Express.Multer.File,
+        cb: (error: any, filename: string) => void
+    ) => {
+        const uniqueSuffix: string =
+            Date.now() + '-' + Math.round(Math.random() * 1e9)
+        cb(null, uniqueSuffix + path.extname(file.originalname))
+    },
+})
+
+const upload = multer({
+    storage,
+    fileFilter: (req, file, cb) => {
+        const fileTypes = /jpeg|jpg|png|gif/
+        const extname = fileTypes.test(
+            path.extname(file.originalname).toLowerCase()
+        )
+        const mimetype = fileTypes.test(file.mimetype)
+
+        if (mimetype && extname) {
+            return cb(null, true)
+        } else {
+            cb(
+                new Error(
+                    'Error: File upload only supports the following filetypes - ' +
+                        fileTypes
+                )
+            )
+        }
+    },
+})
+
+app.post(
+    '/upload-profile-picture',
+    upload.single('profilePicture'),
+    async (req: Request, res: Response): Promise<void> => {
+        try {
+            if (!req.file) {
+                res.status(400).json({
+                    error: 'No file uploaded.',
+                })
+                return
+            }
+            const profilePictureUrl = `/uploads/${req.file.filename}`
+            const userId = req.body.userId
+            await User.findByIdAndUpdate(userId, {
+                profilePicture: profilePictureUrl,
+            })
+
+            res.status(200).json({
+                message: 'Profile picture uploaded successfully',
+                url: profilePictureUrl,
+            })
+        } catch (error) {
+            console.error(error)
+            res.status(500).json({
+                error: 'An error occurred while uploading the picture',
+            })
+        }
+    }
+)
+
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
 
 // Testowy endpoint
 app.get('/', (req: Request, res: Response): void => {
