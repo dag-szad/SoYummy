@@ -1,13 +1,34 @@
 <template>
     <div class="profile">
         <img
-            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-            alt="Profile photo"
+            v-if="profilePictureUrl"
+            :src="profilePictureUrl"
+            alt="User's profile picture"
             class="profile__photo"
         />
-        <p class="profile__username">Name</p>
+        <img
+            v-else
+            src="../../assets/images/profilePicture/profile-picture-bg.png"
+            alt="Default profile background"
+            class="profile__photo"
+        />
+
+        <p class="profile__username">{{ username }}</p>
     </div>
 </template>
+
+<script setup lang="ts">
+defineProps({
+    profilePictureUrl: {
+        type: String,
+        default: '',
+    },
+    username: {
+        type: String,
+        required: true,
+    },
+})
+</script>
 
 <style scoped lang="scss">
 .profile {
@@ -16,11 +37,23 @@
     gap: 14px;
 
     &__photo {
+        background-repeat: no-repeat;
+        background-position: center;
         width: 34px;
+        height: 34px;
         border-radius: 50%;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
 
         @media (min-width: 768px) {
             width: 44px;
+            height: 44px;
         }
     }
 
