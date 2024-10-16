@@ -96,7 +96,7 @@
 <script setup lang="ts">
 import { computed, defineProps, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
+import axiosInstance from '../../services/axiosInstance'
 
 const router = useRouter()
 
@@ -129,15 +129,14 @@ const buttonTitle = computed(() => (isRegister.value ? 'Sign up' : 'Sign in'))
 const handleSubmit = async () => {
     if (isRegister.value && !validateForm()) return
     try {
-        const endpoint = isRegister.value ? '/register' : '/login'
         const payload = {
             email: email.value,
             password: password.value,
             ...(isRegister.value && { username: username.value }),
         }
 
-        const response = await axios.post(
-            `http://localhost:3000${endpoint}`,
+        const response = await axiosInstance.post(
+            isRegister.value ? '/register' : '/login',
             payload
         )
 
