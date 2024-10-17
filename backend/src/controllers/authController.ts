@@ -34,7 +34,13 @@ export const registerUser = async (
             { expiresIn: '1h' }
         )
 
-        res.status(201).json({ message: 'User registered successfully', token })
+        res.status(201).json({
+            message: 'User registered successfully',
+            token,
+            userId: newUser._id,
+            username: newUser.username,
+            profilePicture: newUser.profilePicture
+        })
     } catch (error) {
         console.error('Error during registration:', error)
         res.status(500).json({ message: 'Server error' })
@@ -70,7 +76,12 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
             { expiresIn: '1h' }
         )
 
-        res.status(200).json({ token })
+        res.status(200).json({
+            token,
+            userId: user._id,
+            username: user.username,
+            profilePicture: user.profilePicture
+        })
     } catch (error) {
         console.error('Error during login:', error)
         res.status(500).json({ message: 'Server error' })
