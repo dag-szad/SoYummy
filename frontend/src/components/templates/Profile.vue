@@ -1,5 +1,5 @@
 <template>
-    <div class="profile">
+    <div class="profile" @click="toggleOptions">
         <div class="profile__photo">
             <img
                 v-if="profilePicture"
@@ -8,24 +8,57 @@
             />
         </div>
         <p class="profile__username">{{ username }}</p>
+        <options :isOptionsOpen="isOptionsOpen" />
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useUserStore } from '../../store/index'
+
+import Options from './Options.vue'
 
 const userStore = useUserStore()
 
 const profilePicture = computed(() => userStore.profilePicture || '')
 const username = computed(() => userStore.username || 'Guest')
+
+const isOptionsOpen = ref(false)
+
+const toggleOptions = () => {
+    isOptionsOpen.value = !isOptionsOpen.value
+}
+
+const handleClickOutside = (event: MouseEvent) => {
+    const optionsElement = document.querySelector('.options')
+    const profileElement = document.querySelector('.profile')
+
+    if (
+        optionsElement &&
+        !optionsElement.contains(event.target as Node) &&
+        profileElement &&
+        !profileElement.contains(event.target as Node)
+    ) {
+        isOptionsOpen.value = false
+    }
+}
+
+onMounted(() => {
+    document.addEventListener('click', handleClickOutside)
+})
+
+onBeforeUnmount(() => {
+    document.removeEventListener('click', handleClickOutside)
+})
 </script>
 
 <style scoped lang="scss">
 .profile {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 10px;
+
+    cursor: pointer;
 
     &__photo {
         background-image: url('../../assets/images/profilePicture/profile-picture-bg.png');
