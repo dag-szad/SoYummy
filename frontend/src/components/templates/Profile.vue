@@ -8,8 +8,8 @@
             />
         </div>
         <p class="profile__username">{{ username }}</p>
-        <options :isOptionsOpen="isOptionsOpen" />
     </div>
+    <options :isOptionsOpen="isOptionsOpen" />
 </template>
 
 <script setup lang="ts">
