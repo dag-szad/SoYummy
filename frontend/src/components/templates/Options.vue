@@ -74,18 +74,24 @@ defineProps({
 
 .button-transparent {
     border: 1px solid var(--options-btn-transparent);
-    color: var(--options-btn-txt);
+    color: var(--options-btn-transparent);
     background: none;
 
     transition: all 0.3s ease-in-out;
 
     svg {
-        fill: var(--options-btn-txt);
+        fill: var(--options-btn-transparent);
+        transition: fill 0.3s ease-in-out;
     }
 
     &:hover {
         background-color: var(--options-btn-green);
         border-color: var(--options-btn-green);
+        color: var(--options-btn-txt);
+
+        svg {
+            fill: var(--options-btn-txt);
+        }
     }
 }
 .button-green {
