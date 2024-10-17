@@ -1,26 +1,74 @@
 <template>
     <div :class="['options', { 'options--open': isOptionsOpen }]">
-        <button class="options__button button-transparent">
+        <button class="options__button button-transparent" @click="toggleEdit">
             Edit profile
             <svg class="options__icon">
                 <use href="../../assets/icons/icons.svg#edit-icon"></use>
             </svg>
         </button>
-        <button class="options__button button-green">
+        <button class="options__button button-green" @click="toggleLogout">
             Logout
             <svg class="options__icon">
                 <use href="../../assets/icons/icons.svg#arrow-right-icon"></use>
             </svg>
         </button>
     </div>
+    <Modal
+        :isLogoutOpen="isLogoutOpen"
+        :isEditOpen="isEditOpen"
+        @closeModal="closeAllModals"
+    />
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import Modal from './Modal.vue'
+
 defineProps({
     isOptionsOpen: {
         type: Boolean,
         default: false,
     },
+})
+
+const isLogoutOpen = ref(false)
+const isEditOpen = ref(false)
+
+const toggleLogout = () => {
+    isLogoutOpen.value = true
+    isEditOpen.value = false
+}
+
+const toggleEdit = () => {
+    isEditOpen.value = true
+    isLogoutOpen.value = false
+}
+
+const closeAllModals = () => {
+    isLogoutOpen.value = false
+    isEditOpen.value = false
+}
+
+const handleClickOutside = (event: MouseEvent) => {
+    const modalElement = document.querySelector('.modal')
+    const optionsElement = document.querySelector('.options')
+
+    if (
+        optionsElement &&
+        !optionsElement.contains(event.target as Node) &&
+        modalElement &&
+        !modalElement.contains(event.target as Node)
+    ) {
+        closeAllModals()
+    }
+}
+
+onMounted(() => {
+    document.addEventListener('click', handleClickOutside)
+})
+
+onBeforeUnmount(() => {
+    document.removeEventListener('click', handleClickOutside)
 })
 </script>
 
