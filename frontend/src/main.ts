@@ -1,5 +1,6 @@
 import { createApp, ref } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import HomePage from './components/pages/HomePage.vue'
@@ -72,9 +73,11 @@ router.beforeEach((to, _from, next) => {
 })
 
 const app = createApp(App)
+const pinia = createPinia()
 
 app.provide('theme', theme)
 app.provide('toggleTheme', toggleTheme)
 
 app.use(router)
+app.use(pinia)
 app.mount('#app')
