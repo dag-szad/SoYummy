@@ -38,6 +38,9 @@
 
 <script setup lang="ts">
 import { computed, defineProps, defineEmits, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '../../store/index'
+import axiosInstance from '../../services/axiosInstance'
 
 const props = defineProps({
     isLogoutOpen: {
@@ -64,8 +67,18 @@ const closeModal = () => {
     emit('closeModal')
 }
 
-const logout = () => {
-    closeModal()
+const router = useRouter()
+
+const logout = async () => {
+    try {
+        await axiosInstance.post('/auth/logout')
+        const userStore = useUserStore()
+        userStore.clearUserData()
+        router.push('/')
+        closeModal()
+    } catch (error) {
+        console.error('Logout failed:', error)
+    }
 }
 
 const saveChanges = () => {
