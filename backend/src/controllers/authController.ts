@@ -39,7 +39,7 @@ export const registerUser = async (
             token,
             userId: newUser._id,
             username: newUser.username,
-            profilePicture: newUser.profilePicture
+            profilePicture: newUser.profilePicture,
         })
     } catch (error) {
         console.error('Error during registration:', error)
@@ -80,7 +80,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
             token,
             userId: user._id,
             username: user.username,
-            profilePicture: user.profilePicture
+            profilePicture: user.profilePicture,
         })
     } catch (error) {
         console.error('Error during login:', error)
@@ -110,8 +110,16 @@ export const logoutUser = async (
 
         await newBlacklistEntry.save()
 
-        res.setHeader('Clear-Site-Data', '"cookies"')
-        res.status(201).json({ message: 'User logged out successfully' })
+        res.setHeader('Clear-Site-Data', '"cookies", "storage"')
+        res.status(201).json({
+            message: 'User logged out successfully',
+            clearedData: {
+                token: null,
+                username: null,
+                profilePicture: null,
+                id: null,
+            },
+        })
     } catch (error) {
         console.error(error)
         res.status(500).json({ message: 'Server error' })
