@@ -96,65 +96,66 @@
 <script setup lang="ts">
 import { computed, defineProps, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
+
+import axiosInstance from '../../services/axiosInstance'
+import { useUserStore } from '../../store/index'
+
+interface Props {
+    destination: 'login' | 'register'
+}
+
+const props = defineProps<Props>()
 
 const router = useRouter()
-
-const props = defineProps({
-    destination: {
-        type: String,
-        required: true,
-        validator: (value: string) =>
-            ['login', 'register'].includes(value.toLowerCase()),
-    },
-})
 
 const username = ref<string>('')
 const email = ref<string>('')
 const password = ref<string>('')
-const errorMessage = ref<string>('')
 
+const errorMessage = ref<string>('')
 const usernameError = ref<string>('')
 const emailError = ref<string>('')
 const passwordError = ref<string>('')
 
-const isRegister = computed(
-    () => props.destination.toLowerCase() === 'register'
-)
+const isRegister = computed(() => props.destination === 'register')
 const formTitle = computed(() =>
     isRegister.value ? 'Registration' : 'Sign In'
 )
 const buttonTitle = computed(() => (isRegister.value ? 'Sign up' : 'Sign in'))
 
+const userStore = useUserStore()
+
 const handleSubmit = async () => {
     if (isRegister.value && !validateForm()) return
     try {
-        const endpoint = isRegister.value ? '/register' : '/login'
         const payload = {
             email: email.value,
             password: password.value,
             ...(isRegister.value && { username: username.value }),
         }
 
-        const response = await axios.post(
-            `http://localhost:3000${endpoint}`,
+        const response = await axiosInstance.post(
+            isRegister.value ? '/auth/register' : '/auth/login',
             payload
         )
 
         if (response.data.token) {
-            localStorage.setItem('token', response.data.token)
+            userStore.setUserData({
+                token: response.data.token,
+                userId: response.data.userId,
+                username: response.data.username,
+                profilePicture: response.data.profilePicture,
+            })
             router.push('/main')
         } else {
             errorMessage.value = response.data.message || 'An error occurred'
         }
-    } catch {
+    } catch (error) {
         errorMessage.value = 'Invalid email or password'
     }
 }
 
 const validate = (field: 'username' | 'email' | 'password') => {
-    if (!isRegister.value) return
-
     const value =
         field === 'username'
             ? username.value
@@ -162,7 +163,7 @@ const validate = (field: 'username' | 'email' | 'password') => {
             ? email.value
             : password.value
 
-    if (field === 'username' && /\d/.test(value)) {
+    if (field === 'username' && isRegister.value && /\d/.test(value)) {
         usernameError.value = 'Username must contain only letters'
     } else if (field === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
         emailError.value = 'Invalid email format'
