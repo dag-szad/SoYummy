@@ -53,25 +53,21 @@ const props = defineProps({
     },
 })
 
-const emit = defineEmits(['closeModal'])
-
-const newUsername = ref('')
-
 const modalType = computed(() => {
     if (props.isLogoutOpen) return 'logout'
     if (props.isEditOpen) return 'edit'
     return null
 })
 
+const emit = defineEmits(['closeModal'])
 const closeModal = () => {
     emit('closeModal')
 }
 
 const router = useRouter()
-
 const logout = async () => {
     try {
-        await axiosInstance.post('/auth/logout')
+        await axiosInstance.post('auth/logout')
         const userStore = useUserStore()
         userStore.clearUserData()
         router.push('/')
@@ -81,8 +77,32 @@ const logout = async () => {
     }
 }
 
-const saveChanges = () => {
-    console.log('New username:', newUsername.value)
+const newUsername = ref('')
+const saveChanges = async () => {
+    const userStore = useUserStore()
+    const userId = userStore.userId
+
+    if (!newUsername.value) {
+        console.error('Username cannot be empty')
+        return
+    }
+
+    if (!userId) {
+        console.error('User ID is not available')
+        return
+    }
+
+    try {
+        await axiosInstance.post('/users/update-username', {
+            userId: userId,
+            username: newUsername.value,
+        })
+        userStore.updateUsername(newUsername.value)
+        console.log('New username:', newUsername.value)
+    } catch (error) {
+        console.error('Username update failed:', error)
+    }
+
     closeModal()
 }
 </script>
