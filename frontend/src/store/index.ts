@@ -58,5 +58,10 @@ export const useUserStore = defineStore('user', {
             this.username = newUsername
             localStorage.setItem('username', newUsername)
         },
+
+        updateProfilePicture(newProfilePicture: string) {
+            this.profilePicture = newProfilePicture
+            localStorage.setItem('profilePicture', newProfilePicture)
+        },
     },
 })
