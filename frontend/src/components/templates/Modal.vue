@@ -13,7 +13,7 @@
         </div>
 
         <div class="modal__content" v-else-if="modalType === 'edit'">
-            <button>Add profile picture</button>
+            <EditPhoto @profilePictureSelected="handleProfilePictureSelected" />
             <form class="input" @submit.prevent="saveChanges">
                 <div class="input__container">
                     <svg class="input__icon">
@@ -39,8 +39,11 @@
 <script setup lang="ts">
 import { computed, defineProps, defineEmits, ref } from 'vue'
 import { useRouter } from 'vue-router'
+
 import { useUserStore } from '../../store/index'
 import axiosInstance from '../../services/axiosInstance'
+
+import EditPhoto from './EditPhoto.vue'
 
 const props = defineProps({
     isLogoutOpen: {
@@ -78,6 +81,12 @@ const logout = async () => {
 }
 
 const newUsername = ref('')
+const newProfilePictureFile = ref<File | null>(null)
+
+const handleProfilePictureSelected = (file: File) => {
+    newProfilePictureFile.value = file
+}
+
 const saveChanges = async () => {
     const userStore = useUserStore()
     const userId = userStore.userId
@@ -99,11 +108,24 @@ const saveChanges = async () => {
         })
         userStore.updateUsername(newUsername.value)
         console.log('New username:', newUsername.value)
-    } catch (error) {
-        console.error('Username update failed:', error)
-    }
 
-    closeModal()
+        if (newProfilePictureFile.value) {
+            const formData = new FormData()
+            formData.append('userId', userId)
+            formData.append('profilePicture', newProfilePictureFile.value)
+
+            await axiosInstance.post('/users/update-photo', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+            console.log('New profile picture uploaded')
+        }
+
+        closeModal()
+    } catch (error) {
+        console.error('Profile update failed:', error)
+    }
 }
 </script>
 
