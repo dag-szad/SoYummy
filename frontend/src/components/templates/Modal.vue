@@ -114,11 +114,15 @@ const saveChanges = async () => {
             formData.append('userId', userId)
             formData.append('profilePicture', newProfilePictureFile.value)
 
-            await axiosInstance.post('/users/update-photo', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
+            await axiosInstance.post(
+                '/users/upload-profile-picture',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            )
             console.log('New profile picture uploaded')
         }
 
