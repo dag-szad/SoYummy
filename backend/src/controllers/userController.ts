@@ -63,38 +63,39 @@ export const updateUsername = async (
 }
 
 // Aktualizacja zdjęcia profilowego
-// export const updateProfilePicture = async (
-//     req: Request,
-//     res: Response
-// ): Promise<void> => {
-//     if (!req.file) {
-//         res.status(400).json({ error: 'No file uploaded.' })
-//         return
-//     }
+export const updateProfilePicture = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    if (!req.file) {
+        res.status(400).json({ error: 'No file uploaded.' })
+        return
+    }
 
-//     const profilePictureUrl = `/uploads/${req.file.filename}`
-//     const userId = req.body.userId
+    const profilePictureUrl = `/uploads/${req.file.filename}`
+    const userId = req.body.userId
 
-//     try {
-//         const updatedUser = await User.findByIdAndUpdate(
-//             userId,
-//             { profilePicture: profilePictureUrl },
-//             { new: true }
-//         )
-//         if (!updatedUser) {
-//             res.status(404).json({ message: 'User not found' })
-//             return
-//         }
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { profilePicture: profilePictureUrl },
+            { new: true }
+        )
 
-//         res.status(200).json({
-//             message: 'Profile picture uploaded successfully',
-//             url: profilePictureUrl,
-//             user: updatedUser,
-//         })
-//     } catch (error) {
-//         console.error(error)
-//         res.status(500).json({
-//             error: 'An error occurred while updating the picture',
-//         })
-//     }
-// }
+        if (!updatedUser) {
+            res.status(404).json({ message: 'User not found' })
+            return
+        }
+
+        res.status(200).json({
+            message: 'Profile picture uploaded successfully',
+            url: profilePictureUrl,
+            user: updatedUser,
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({
+            error: 'An error occurred while updating the picture',
+        })
+    }
+}
