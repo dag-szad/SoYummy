@@ -91,31 +91,21 @@ const saveChanges = async () => {
     const userStore = useUserStore()
     const userId = userStore.userId
 
-    if (!newUsername.value) {
-        console.error('Username cannot be empty')
-        return
-    }
-
-    if (!userId) {
-        console.error('User ID is not available')
-        return
-    }
-
     try {
-        await axiosInstance.post('/users/update-username', {
-            userId: userId,
-            username: newUsername.value,
-        })
-        userStore.updateUsername(newUsername.value)
-        console.log('New username:', newUsername.value)
+        if (newUsername.value) {
+            await axiosInstance.post('/users/update-username', {
+                userId: userId,
+                username: newUsername.value,
+            })
+            userStore.updateUsername(newUsername.value)
+        }
 
         if (newProfilePictureFile.value) {
             const formData = new FormData()
-            formData.append('userId', userId)
             formData.append('profilePicture', newProfilePictureFile.value)
 
-            await axiosInstance.post(
-                '/users/upload-profile-picture',
+            const response = await axiosInstance.post(
+                `/users/${userId}/profile-picture`,
                 formData,
                 {
                     headers: {
@@ -123,7 +113,8 @@ const saveChanges = async () => {
                     },
                 }
             )
-            console.log('New profile picture uploaded')
+
+            userStore.updateProfilePicture(response.data.user.profilePicture)
         }
 
         closeModal()
