@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import path from 'path'
+import fs from 'fs'
 
 import connectDB from './database'
 
@@ -23,7 +24,12 @@ connectDB()
 app.use('/api/auth', authRoutes)
 app.use('/api/users', userRoutes)
 
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
+const uploadsDir = path.join(__dirname, '../uploads')
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir)
+    console.log('Folder "uploads" created.')
+}
+app.use('/uploads', express.static(uploadsDir))
 
 // Testowy endpoint
 app.get('/', (req: Request, res: Response): void => {

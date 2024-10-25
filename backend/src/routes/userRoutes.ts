@@ -1,14 +1,14 @@
-import { Router } from 'express'
+import express, { Router } from 'express'
+import path from 'path'
 import {
     getUserProfile,
     updateUsername,
-    // updateProfilePicture,
+    updateProfilePicture,
 } from '../controllers/userController'
 import { updateUsernameValidation } from '../middleware/validationMiddleware'
-import multer from 'multer'
+import upload from '../middleware/uploadMiddleware'
 
-const router = Router()
-// const upload = multer({ dest: 'uploads/' })
+const router = express.Router()
 
 // Pobranie profilu użytkownika
 router.get('/:id', getUserProfile)
@@ -17,10 +17,20 @@ router.get('/:id', getUserProfile)
 router.post('/update-username', updateUsernameValidation, updateUsername)
 
 // Aktualizacja zdjęcia profilowego
-// router.post(
-//     '/upload-profile-picture',
-//     upload.single('profilePicture'),
-//     updateProfilePicture
-// )
+router.post(
+    '/:id/profile-picture',
+    upload.single('profilePicture'),
+    updateProfilePicture
+)
+
+router.get('/uploads/:filename', (req, res) => {
+    const filename = req.params.filename
+    const filePath = path.join(__dirname, '../uploads', filename)
+    res.sendFile(filePath, (err) => {
+        if (err) {
+            res.status(404).send('File not found')
+        }
+    })
+})
 
 export default router

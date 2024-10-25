@@ -13,7 +13,7 @@
         </div>
 
         <div class="modal__content" v-else-if="modalType === 'edit'">
-            <button>Add profile picture</button>
+            <EditPhoto @profilePictureSelected="handleProfilePictureSelected" />
             <form class="input" @submit.prevent="saveChanges">
                 <div class="input__container">
                     <svg class="input__icon">
@@ -39,8 +39,11 @@
 <script setup lang="ts">
 import { computed, defineProps, defineEmits, ref } from 'vue'
 import { useRouter } from 'vue-router'
+
 import { useUserStore } from '../../store/index'
 import axiosInstance from '../../services/axiosInstance'
+
+import EditPhoto from './EditPhoto.vue'
 
 const props = defineProps({
     isLogoutOpen: {
@@ -53,25 +56,21 @@ const props = defineProps({
     },
 })
 
-const emit = defineEmits(['closeModal'])
-
-const newUsername = ref('')
-
 const modalType = computed(() => {
     if (props.isLogoutOpen) return 'logout'
     if (props.isEditOpen) return 'edit'
     return null
 })
 
+const emit = defineEmits(['closeModal'])
 const closeModal = () => {
     emit('closeModal')
 }
 
 const router = useRouter()
-
 const logout = async () => {
     try {
-        await axiosInstance.post('/auth/logout')
+        await axiosInstance.post('auth/logout')
         const userStore = useUserStore()
         userStore.clearUserData()
         router.push('/')
@@ -81,9 +80,47 @@ const logout = async () => {
     }
 }
 
-const saveChanges = () => {
-    console.log('New username:', newUsername.value)
-    closeModal()
+const newUsername = ref('')
+const newProfilePictureFile = ref<File | null>(null)
+
+const handleProfilePictureSelected = (file: File) => {
+    newProfilePictureFile.value = file
+}
+
+const saveChanges = async () => {
+    const userStore = useUserStore()
+    const userId = userStore.userId
+
+    try {
+        if (newUsername.value) {
+            await axiosInstance.post('/users/update-username', {
+                userId: userId,
+                username: newUsername.value,
+            })
+            userStore.updateUsername(newUsername.value)
+        }
+
+        if (newProfilePictureFile.value) {
+            const formData = new FormData()
+            formData.append('profilePicture', newProfilePictureFile.value)
+
+            const response = await axiosInstance.post(
+                `/users/${userId}/profile-picture`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            )
+
+            userStore.updateProfilePicture(response.data.user.profilePicture)
+        }
+
+        closeModal()
+    } catch (error) {
+        console.error('Profile update failed:', error)
+    }
 }
 </script>
 

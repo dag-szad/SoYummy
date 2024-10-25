@@ -63,38 +63,39 @@ export const updateUsername = async (
 }
 
 // Aktualizacja zdjęcia profilowego
-// export const updateProfilePicture = async (
-//     req: Request,
-//     res: Response
-// ): Promise<void> => {
-//     if (!req.file) {
-//         res.status(400).json({ error: 'No file uploaded.' })
-//         return
-//     }
+export const updateProfilePicture = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    const userId = req.params.id
 
-//     const profilePictureUrl = `/uploads/${req.file.filename}`
-//     const userId = req.body.userId
+    console.log(`Updating profile picture for user ID: ${userId}`)
 
-//     try {
-//         const updatedUser = await User.findByIdAndUpdate(
-//             userId,
-//             { profilePicture: profilePictureUrl },
-//             { new: true }
-//         )
-//         if (!updatedUser) {
-//             res.status(404).json({ message: 'User not found' })
-//             return
-//         }
+    if (!req.file) {
+        console.log('No file uploaded')
+        res.status(400).json({ message: 'No file uploaded' })
+        return
+    }
 
-//         res.status(200).json({
-//             message: 'Profile picture uploaded successfully',
-//             url: profilePictureUrl,
-//             user: updatedUser,
-//         })
-//     } catch (error) {
-//         console.error(error)
-//         res.status(500).json({
-//             error: 'An error occurred while updating the picture',
-//         })
-//     }
-// }
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { profilePicture: req.file.path },
+            { new: true }
+        )
+
+        if (!updatedUser) {
+            console.log('User not found')
+            res.status(404).json({ message: 'User not found' })
+            return
+        }
+
+        res.status(200).json({
+            message: 'Profile picture updated successfully',
+            user: updatedUser,
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ message: 'Server error' })
+    }
+}
