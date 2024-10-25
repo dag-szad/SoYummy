@@ -4,6 +4,7 @@
             <img
                 v-if="profilePicture"
                 :src="profilePicture"
+                :key="profilePicture"
                 alt="User's profile picture"
             />
         </div>
@@ -20,7 +21,11 @@ import Options from './Options.vue'
 
 const userStore = useUserStore()
 
-const profilePicture = computed(() => userStore.profilePicture || '')
+const profilePicture = computed(() => {
+    return userStore.profilePicture
+        ? `${userStore.profilePicture}`
+        : ''
+})
 const username = computed(() => userStore.username || 'Guest')
 
 const isOptionsOpen = ref(false)
