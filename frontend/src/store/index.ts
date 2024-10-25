@@ -7,6 +7,8 @@ interface UserState {
     profilePicture: string | null
 }
 
+const BASE_URL = 'http://localhost:3000'
+
 export const useUserStore = defineStore('user', {
     state: (): UserState => ({
         token: null,
@@ -21,6 +23,8 @@ export const useUserStore = defineStore('user', {
             this.userId = data.userId
             this.username = data.username
             this.profilePicture = data.profilePicture
+                ? `${BASE_URL}/${data.profilePicture}`
+                : null
 
             localStorage.setItem('token', data.token || '')
             localStorage.setItem('userId', data.userId || '')
@@ -38,7 +42,11 @@ export const useUserStore = defineStore('user', {
                 this.token = token
                 this.userId = userId
                 this.username = username
-                this.profilePicture = profilePicture || null
+                this.profilePicture = profilePicture
+                    ? `${BASE_URL}/${profilePicture}`
+                    : null
+            } else {
+                console.warn('User data not found in localStorage.')
             }
         },
 
@@ -60,8 +68,11 @@ export const useUserStore = defineStore('user', {
         },
 
         updateProfilePicture(newProfilePicture: string) {
-            this.profilePicture = newProfilePicture
-            localStorage.setItem('profilePicture', newProfilePicture)
+            this.profilePicture = `${BASE_URL}/${newProfilePicture}`
+            localStorage.setItem(
+                'profilePicture',
+                `${BASE_URL}/${newProfilePicture}`
+            )
         },
     },
 })
