@@ -38,6 +38,12 @@ const handleFileChange = (event: Event) => {
     const input = event.target as HTMLInputElement
     const file = input.files ? input.files[0] : null
     if (file) {
+        const validTypes = ['image/jpeg', 'image/png', 'image/gif']
+        if (!validTypes.includes(file.type)) {
+            alert('Please select a valid image file (JPEG, PNG, GIF).')
+            localImageUrl.value = null
+            return
+        }
         localImageUrl.value = URL.createObjectURL(file)
         emit('profilePictureSelected', file)
     }
