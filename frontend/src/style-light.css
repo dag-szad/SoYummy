@@ -9,7 +9,7 @@
 
     --main-bg: #fafafa;
     --main-txt: #22252a;
-    --main-txt-transparent: #22252a80;
+    --main-txt-transparent: #22252abf;
     --main-accent: #8baa36;
     --main-accent-hover: #a1c04c;
 
@@ -25,16 +25,20 @@
     --auth-btn: #8baa36;
     --auth-btn-hover: #a1c04c;
 
+    --header-dark: #22252a;
+
     --options-btn-transparent: #8baa36;
     --options-btn-green: #8baa36;
     --options-btn-txt: #fafafa;
-    --options-form-border: #23262A80;
+    --options-form-border: #23262a80;
 
     --modal-bg: #fafafa;
     --modal-btn-txt: #fafafa;
     --modal-btn: #d9d9d9;
 
     --nav-background: #ebf3d4;
+
+    --main-page-addon: #ffffff;
 
     --footer-bg: #22252a;
     --footer-txt: #fafafa;
