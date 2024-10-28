@@ -71,7 +71,7 @@ export const useUserStore = defineStore('user', {
             this.profilePicture = `${BASE_URL}/${newProfilePicture}`
             localStorage.setItem(
                 'profilePicture',
-                `${BASE_URL}/${newProfilePicture}`
+                `${newProfilePicture}`
             )
         },
     },
