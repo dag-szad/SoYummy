@@ -8,6 +8,8 @@ import connectDB from './database'
 
 import userRoutes from './routes/userRoutes'
 import authRoutes from './routes/authRoutes'
+import categoryRoutes from './routes/categoryRoutes'
+import recipeRoutes from './routes/recipeRoutes'
 
 import { errorHandler } from './middleware/errorHandler'
 
@@ -23,6 +25,8 @@ connectDB()
 // Główne endpointy
 app.use('/api/auth', authRoutes)
 app.use('/api/users', userRoutes)
+app.use('/categories', categoryRoutes)
+app.use('/recipes', recipeRoutes)
 
 const uploadsDir = path.join(__dirname, '../uploads')
 if (!fs.existsSync(uploadsDir)) {
