@@ -154,6 +154,7 @@ onBeforeUnmount(() => {
     width: 225px;
 
     color: var(--main-txt);
+    transition: all 0.3s ease-in-out;
 
     @media (min-width: 768px) {
         padding: 12px;
