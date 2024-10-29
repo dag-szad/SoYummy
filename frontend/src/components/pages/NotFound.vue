@@ -19,7 +19,7 @@
             <p class="error__text">
                 but the page you were looking for can't be found...
             </p>
-            <router-link to="/main" class="error__link">Go to Home</router-link>
+            <router-link to="/main" class="error__link">Go to main page</router-link>
         </div>
     </div>
 </template>

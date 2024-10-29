@@ -79,6 +79,9 @@ const toggleNav = () => {
     justify-content: space-between;
     align-items: center;
 
+    position: relative;
+    z-index: 2;
+
     &__actions {
         display: flex;
         align-items: center;
@@ -96,7 +99,7 @@ const toggleNav = () => {
         width: 28px;
         height: 28px;
 
-        stroke: var(--main-txt);
+        stroke: var(--header-dark);
 
         @media (min-width: 1100px) {
             display: none;
