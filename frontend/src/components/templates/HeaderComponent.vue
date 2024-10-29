@@ -99,7 +99,11 @@ const toggleNav = () => {
         width: 28px;
         height: 28px;
 
-        stroke: var(--header-dark);
+        stroke: var(--main-txt);
+
+        @media (min-width: 768px) {
+            stroke: var(--header-dark);
+        }
 
         @media (min-width: 1100px) {
             display: none;
