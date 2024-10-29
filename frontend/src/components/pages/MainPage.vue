@@ -6,13 +6,24 @@
                 This is not only a recipe app, it is, in fact, your cookbook.
                 You can add your own recipes to save them for the future.
             </p>
-            <search-bar v-if="!isMobile" class="temporary"/>
+            <search-bar v-if="!isMobile" class="temporary" />
         </div>
         <div class="main__image">
             <img
-                src="../../assets/images/mainPage/main-mobile@1x.png"
-                alt="alt"
+                src="/src/assets/images/mainPage/main-mobile@1x.png"
+                alt="404 page image"
                 class="main__img"
+                :srcset="`
+                    /src/assets/images/mainPage/main-mobile@1x.png 321w,
+                    /src/assets/images/mainPage/main-mobile@2x.png 642w,
+                    /src/assets/images/mainPage/main-tablet@1x.png 369w,
+                    /src/assets/images/mainPage/main-tablet@2x.png 737w,
+                    /src/assets/images/mainPage/main-desktop@1x.png 578w,
+                    /src/assets/images/mainPage/main-desktop@2x.png 1156w
+                    `"
+                sizes="(max-width: 767px) 321px, 
+                (min-width: 768px) and (max-width: 1099px) 369px, 
+                (min-width: 1100px) 578px"
             />
             <div class="addon">
                 <p class="addon__text">
@@ -28,7 +39,7 @@
                     </svg>
                 </router-link>
             </div>
-            <search-bar v-if="isMobile" class="temporary"/>
+            <search-bar v-if="isMobile" class="temporary" />
         </div>
     </div>
     <div class="trapezoid"></div>
@@ -59,12 +70,22 @@ onBeforeUnmount(() => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 44px;
+    gap: 40px;
 
     position: relative;
     z-index: 1;
 
-    padding: 32px 16px;
+    width: fit-content;
+    margin: 32px auto;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        gap: 20px;
+    }
+
+    @media (min-width: 1100px) {
+        gap: 75px;
+    }
 
     &__desc {
         display: flex;
@@ -119,16 +140,12 @@ onBeforeUnmount(() => {
         flex-direction: column;
         align-items: center;
     }
-
-    &__img {
-        width: 400px;
-    }
 }
 
 .addon {
     position: absolute;
-    bottom: 150px;
-    right: 25px;
+    bottom: 100px;
+    right: 15px;
 
     background-color: var(--main-page-addon);
     border-radius: 8px;
@@ -141,11 +158,16 @@ onBeforeUnmount(() => {
     @media (min-width: 768px) {
         padding: 12px;
         width: 260px;
+
+        bottom: 75px;
+        right: 15px;
     }
 
     @media (min-width: 1100px) {
         padding: 16px;
         width: 300px;
+
+        right: 25px;
     }
 
     &__text {
@@ -168,12 +190,7 @@ onBeforeUnmount(() => {
         gap: 5px;
 
         &:hover {
-            .addon__link-text {
-                color: var(--main-accent-hover);
-            }
-            .addon__link-icon {
-                stroke: var(--main-accent-hover);
-            }
+            color: var(--main-accent);
         }
     }
 
@@ -185,30 +202,40 @@ onBeforeUnmount(() => {
     }
 
     &__link-icon {
-        stroke: var(--main-txt);
         width: 18px;
         height: 18px;
-        transition: stroke 0.3s ease-in-out;
+        transition: color 0.3s ease-in-out;
     }
 }
 
 .trapezoid {
     position: absolute;
-    top: 0px;
+    top: 200px;
     right: 0px;
 
-    width: 60%;
-    height: 650px;
-    background-color: #ebf3d4;
-    clip-path: polygon(40% 0, 100% 0, 100% 100%, 0% 100%);
+    width: 100%;
+    height: 100%;
+    background-image: url('../../assets/images/mainPage/trapezoid-mobile.svg');
+    background-repeat: no-repeat;
+    background-position: top right;
+
+    transition: all 0.3s ease-in-out;
 
     @media (min-width: 768px) {
-        width: 50%;
-        height: 700px;
+        top: -10px;
+        right: -25px;
+        background-image: url('../../assets/images/mainPage/trapezoid-tablet.svg');
     }
 
     @media (min-width: 1100px) {
-        clip-path: polygon(50% 0, 100% 0, 100% 100%, 0% 100%);
+        top: 0px;
+        right: -150px;
+        background-image: url('../../assets/images/mainPage/trapezoid-desktop.svg');
+    }
+
+    @media (min-width: 1200px) {
+        top: 0px;
+        right: -100px;
     }
 }
 
