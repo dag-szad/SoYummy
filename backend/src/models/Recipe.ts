@@ -12,7 +12,7 @@ interface IRecipe extends Document {
 
 const recipeSchema: Schema = new Schema({
     title: { type: String, required: true },
-    category: { type: String, required: true },
+    category: { type: String },
     area: { type: String },
     instructions: { type: String },
     description: { type: String },

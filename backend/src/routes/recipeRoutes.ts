@@ -10,10 +10,10 @@ import {
 const router = express.Router()
 
 // Otrzymanie przepisów według kategorii
-router.get('/categories/:category', getRecipesByCategory)
+router.get('/category/:category', getRecipesByCategory)
 
 // Otrzymanie przepisów według kategorii z limitem
-router.get('/categories/:category/:limit', getRecipesByCategoryWithLimit)
+router.get('/category/:category/:limit', getRecipesByCategoryWithLimit)
 
 // Otrzymanie jednego przepisu według ID
 router.get('/:id', getRecipeById)
