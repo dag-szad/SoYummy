@@ -20,17 +20,18 @@ export const getCategoryById = async (
     req: Request,
     res: Response
 ): Promise<void> => {
-    const categoryId = req.params.id
+    const { id } = req.params
 
     try {
-        const category = await Category.findById(categoryId)
+        const category = await Category.findOne({ _id: id })
+
         if (!category) {
             res.status(404).json({ message: 'Category not found' })
             return
         }
+
         res.status(200).json(category)
     } catch (error) {
-        console.error(error)
         res.status(500).json({ message: 'Server error' })
     }
 }
