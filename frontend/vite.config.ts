@@ -5,6 +5,13 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   server: {
-    open: true,
+      open: true,
+  },
+  css: {
+      preprocessorOptions: {
+          scss: {
+              silenceDeprecations: ['legacy-js-api'],
+          },
+      },
   },
 })
