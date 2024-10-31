@@ -1,45 +1,52 @@
 <template>
-    <div class="main">
-        <div class="main__desc">
-            <h1 class="main__title"><span>So</span>Yummy</h1>
-            <p class="main__text">
-                This is not only a recipe app, it is, in fact, your cookbook.
-                You can add your own recipes to save them for the future.
-            </p>
-            <search-bar v-if="!isMobile" class="temporary" />
-        </div>
-        <div class="main__image">
-            <img
-                src="/src/assets/images/mainPage/main-mobile@1x.png"
-                alt="404 page image"
-                class="main__img"
-                :srcset="`
-                    /src/assets/images/mainPage/main-mobile@1x.png 321w,
-                    /src/assets/images/mainPage/main-mobile@2x.png 642w,
-                    /src/assets/images/mainPage/main-tablet@1x.png 369w,
-                    /src/assets/images/mainPage/main-tablet@2x.png 737w,
-                    /src/assets/images/mainPage/main-desktop@1x.png 578w,
-                    /src/assets/images/mainPage/main-desktop@2x.png 1156w
-                    `"
-                sizes="(max-width: 767px) 321px, 
-                (min-width: 768px) and (max-width: 1099px) 369px, 
-                (min-width: 1100px) 578px"
-            />
-            <div class="addon">
-                <p class="addon__text">
-                    <span>Delicious and healthy</span> way to enjoy a variety of
-                    fresh ingredients in one satisfying meal
+    <div>
+        <div class="main">
+            <div class="main__desc">
+                <h1 class="main__title"><span>So</span>Yummy</h1>
+                <p class="main__text">
+                    This is not only a recipe app, it is, in fact, your cookbook.
+                    You can add your own recipes to save them for the future.
                 </p>
-                <router-link to="/categories" class="addon__link">
-                    <p class="addon__link-text">See recipes</p>
-                    <svg class="addon__link-icon">
-                        <use
-                            href="../../assets/icons/icons.svg#arrow-right-icon"
-                        ></use>
-                    </svg>
-                </router-link>
+                <search-bar v-if="!isMobile" class="temporary" />
             </div>
-            <search-bar v-if="isMobile" class="temporary" />
+            <div class="main__image">
+                <img
+                    src="/src/assets/images/mainPage/main-mobile@1x.png"
+                    alt="404 page image"
+                    class="main__img"
+                    :srcset="`
+                        /src/assets/images/mainPage/main-mobile@1x.png 321w,
+                        /src/assets/images/mainPage/main-mobile@2x.png 642w,
+                        /src/assets/images/mainPage/main-tablet@1x.png 369w,
+                        /src/assets/images/mainPage/main-tablet@2x.png 737w,
+                        /src/assets/images/mainPage/main-desktop@1x.png 578w,
+                        /src/assets/images/mainPage/main-desktop@2x.png 1156w
+                        `"
+                    sizes="(max-width: 767px) 321px, 
+                    (min-width: 768px) and (max-width: 1099px) 369px, 
+                    (min-width: 1100px) 578px"
+                />
+                <div class="addon">
+                    <p class="addon__text">
+                        <span>Delicious and healthy</span> way to enjoy a variety of
+                        fresh ingredients in one satisfying meal
+                    </p>
+                    <router-link to="/categories" class="addon__link">
+                        <p class="addon__link-text">See recipes</p>
+                        <svg class="addon__link-icon">
+                            <use
+                                href="../../assets/icons/icons.svg#arrow-right-icon"
+                            ></use>
+                        </svg>
+                    </router-link>
+                </div>
+                <search-bar v-if="isMobile" class="temporary" />
+            </div>
+        </div>
+        <div class="categories">
+            <main-page-category category="vegan" />
+            <main-page-category category="vegetarian" />
+            <main-page-category category="dessert" />
         </div>
     </div>
     <div class="trapezoid"></div>
@@ -48,6 +55,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import SearchBar from '../templates/SearchBar.vue'
+import MainPageCategory from '../templates/MainPageCategory.vue';
 
 const isMobile = ref(window.innerWidth <= 768)
 
