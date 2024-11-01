@@ -4,8 +4,9 @@
             <div class="main__desc">
                 <h1 class="main__title"><span>So</span>Yummy</h1>
                 <p class="main__text">
-                    This is not only a recipe app, it is, in fact, your cookbook.
-                    You can add your own recipes to save them for the future.
+                    This is not only a recipe app, it is, in fact, your
+                    cookbook. You can add your own recipes to save them for the
+                    future.
                 </p>
                 <search-bar v-if="!isMobile" class="temporary" />
             </div>
@@ -28,8 +29,8 @@
                 />
                 <div class="addon">
                     <p class="addon__text">
-                        <span>Delicious and healthy</span> way to enjoy a variety of
-                        fresh ingredients in one satisfying meal
+                        <span>Delicious and healthy</span> way to enjoy a
+                        variety of fresh ingredients in one satisfying meal
                     </p>
                     <router-link to="/categories" class="addon__link">
                         <p class="addon__link-text">See recipes</p>
@@ -55,7 +56,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import SearchBar from '../templates/SearchBar.vue'
-import MainPageCategory from '../templates/MainPageCategory.vue';
+import MainPageCategory from '../templates/MainPageCategory.vue'
 
 const isMobile = ref(window.innerWidth <= 768)
 
@@ -245,6 +246,24 @@ onBeforeUnmount(() => {
     @media (min-width: 1200px) {
         top: 0px;
         right: -100px;
+    }
+}
+
+.categories {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+
+    margin-bottom: 32px;
+
+    @media (min-width: 768px) {
+        gap: 50px;
+        margin-bottom: 64px;
+    }
+
+    @media (min-width: 1100px) {
+        gap: 75px;
     }
 }
 
