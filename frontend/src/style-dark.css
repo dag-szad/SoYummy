@@ -7,8 +7,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    --main-bg: #22252a;
+    --main-bg: #1e1f28;
     --main-txt: #fafafa;
+    --main-txt-transparent: #fafafabf;
     --main-accent: #8baa36;
     --main-accent-hover: #a1c04c;
 
@@ -24,6 +25,8 @@
     --auth-btn: #8baa36;
     --auth-btn-hover: #a1c04c;
 
+    --header-dark: #22252a;
+
     --options-btn-transparent: #fafafa;
     --options-btn-green: #8baa36;
     --options-btn-txt: #fafafa;
@@ -34,6 +37,9 @@
     --modal-btn: #d9d9d9;
 
     --nav-background: #22252a;
+
+    --main-page-addon: #2a2c36;
+    --main-page-btn: #fafafa;
 
     --footer-bg: #8baa36;
     --footer-txt: #fafafa;

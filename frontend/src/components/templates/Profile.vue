@@ -22,9 +22,7 @@ import Options from './Options.vue'
 const userStore = useUserStore()
 
 const profilePicture = computed(() => {
-    return userStore.profilePicture
-        ? `${userStore.profilePicture}`
-        : ''
+    return userStore.profilePicture ? `${userStore.profilePicture}` : ''
 })
 const username = computed(() => userStore.username || 'Guest')
 
@@ -97,9 +95,14 @@ onBeforeUnmount(() => {
         font-size: 0.75rem;
         font-weight: 600;
         color: var(--main-txt);
+        transition: color 0.3s ease-in-out;
 
         @media (min-width: 768px) {
             font-size: 0.875rem;
+        }
+
+        @media (min-width: 1100px) {
+            color: var(--header-dark);
         }
     }
 }
