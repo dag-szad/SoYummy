@@ -31,11 +31,11 @@
     align-items: center;
     gap: 16px;
 
-    padding: 25px 25px 50px;
+    padding-bottom: 50px;
 
     @media (min-width: 768px) {
         gap: 32px;
-        padding: 50px 0 100px;
+        padding-bottom: 75px;
     }
 
     &__info {
