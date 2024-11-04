@@ -60,7 +60,6 @@ const fetchRecipes = async () => {
     try {
         const limit = getRecipeLimit()
         const url = `${recipeUrl}/recipes/category/${categoryTitle}/${limit}`
-        console.log('Fetching recipes from URL:', url)
         const response = await axios.get(url)
         recipes.value = response.data
     } catch (error) {
@@ -173,6 +172,8 @@ onMounted(() => {
 
     &__title {
         background-color: var(--main-bg);
+        transition: background-color 0.3s ease-in-out;
+
         border-radius: 6px;
 
         text-align: center;
