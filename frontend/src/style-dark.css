@@ -53,6 +53,14 @@
 
     --addon-txt: #fafafa80;
 
+    --search-form-bg: #fafafa00;
+    --search-form-border: #fafafa33;
+    --search-btn-txt: #fafafa;
+    --search-pick-bg: #fafafa00;
+    --search-pick-bg-hover: #fafafa33;
+    --search-pick-border: #fafafa33;
+    --search-pick-txt: #fafafa80;
+
     --alert-yellow: #f6c23e;
     --error-red: #e74a3b;
     --correct-green: #78af49;
@@ -83,11 +91,11 @@ ul {
 }
 
 ::-moz-selection {
-    color: var(--main-white);
-    background: var(--main-green);
+    color: white;
+    background: var(--main-accent);
 }
 
 ::selection {
-    color: var(--main-white);
-    background: var(--main-green);
+    color: white;
+    background: var(--main-accent);
 }
