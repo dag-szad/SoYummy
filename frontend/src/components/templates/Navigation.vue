@@ -102,7 +102,7 @@ const closeNav = () => {
     background-position: bottom right;
 
     position: fixed;
-    z-index: 3;
+    z-index: 10;
     inset: 0;
     overflow: hidden;
 

@@ -121,6 +121,9 @@ function toggleDropdown() {
     flex-direction: column;
     align-items: center;
     gap: 24px;
+
+    position: relative;
+    z-index: 1;
 }
 
 .search {
