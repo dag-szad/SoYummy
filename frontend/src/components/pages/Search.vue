@@ -2,7 +2,8 @@
     <div class="search-page">
         <page-title title="Search" />
         <search-bar addon @recipes-fetched="handleRecipes" />
-        <div class="search__recipes" v-if="recipes.length !== 0">
+
+        <div v-if="recipes.length" class="search__recipes">
             <router-link
                 v-for="recipe in recipes"
                 :key="recipe._id"
@@ -17,6 +18,7 @@
                 <h3 class="recipe__title">{{ recipe.title }}</h3>
             </router-link>
         </div>
+
         <div v-else class="search__else">
             <img
                 src="/src/assets/images/searchPage/search-mobile@1x.png"
@@ -31,19 +33,26 @@
                     /src/assets/images/searchPage/search-desktop@2x.png 1100w
                     `"
                 sizes="(max-width: 767px) 250px, 
-                (min-width: 768px) and (max-width: 1099px) 450px, 
-                (min-width: 1100px) 550px"
+                        (min-width: 768px) and (max-width: 1099px) 450px, 
+                        (min-width: 1100px) 550px"
             />
-            <p v-if="searchFailed">Try something else...</p>
-            <p v-else>Try looking for something...</p>
+            <p>
+                {{
+                    searchFailed
+                        ? 'Try something else...'
+                        : 'Try looking for something...'
+                }}
+            </p>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import PageTitle from '../templates/PageTitle.vue'
 import SearchBar from '../templates/SearchBar.vue'
+import axios from 'axios'
 
 interface Recipe {
     _id: string
@@ -52,12 +61,27 @@ interface Recipe {
 }
 
 const recipes = ref<Recipe[]>([])
-const searchFailed = ref<boolean>(false)
+const searchFailed = ref(false)
+const route = useRoute()
 
-function handleRecipes(data: Recipe[]) {
+const handleRecipes = (data: Recipe[]) => {
     recipes.value = data
     searchFailed.value = data.length === 0
 }
+
+onMounted(async () => {
+    const { type, query } = route.query
+    if (type && query) {
+        try {
+            const { data } = await axios.get(
+                `http://localhost:3000/recipes/search/${type}/${query}`
+            )
+            handleRecipes(data)
+        } catch {
+            searchFailed.value = true
+        }
+    }
+})
 </script>
 
 <style lang="scss" scoped>

@@ -10,7 +10,7 @@
             <button type="submit" class="search__button">Search</button>
         </form>
 
-        <div class="addon" v-if="addon">
+        <div v-if="addon" class="addon">
             <h3 class="addon__title">Search by:</h3>
             <div class="addon__dropdown">
                 <button class="addon__button" @click="toggleDropdown">
@@ -21,12 +21,12 @@
                         ></use>
                     </svg>
                 </button>
-                <div class="addon__content" v-if="isDropdownOpen">
+                <div v-if="isDropdownOpen" class="addon__content">
                     <button
-                        class="addon__option"
                         v-for="opt in options"
                         :key="opt"
                         @click="selectOption(opt)"
+                        class="addon__option"
                     >
                         {{ opt }}
                     </button>
@@ -37,22 +37,16 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, onMounted } from 'vue'
+import { ref, defineProps, defineEmits, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 
-const router = useRouter()
-
 const props = defineProps({
-    option: {
-        type: String,
-        default: 'Title',
-    },
-    addon: {
-        type: Boolean,
-        default: false,
-    },
+    option: { type: String, default: 'Title' },
+    addon: { type: Boolean, default: false },
 })
+
+const emit = defineEmits(['recipes-fetched'])
 
 const placeholders = [
     'Search recipes...',
@@ -65,6 +59,12 @@ const placeholders = [
 ]
 
 const placeholder = ref('')
+const input = ref('')
+const selectedOption = ref(props.option)
+const isDropdownOpen = ref(false)
+const options = ['Title', 'Ingredients']
+const router = useRouter()
+const recipesUrl = 'http://localhost:3000'
 
 const getRandomPlaceholder = () => {
     const randomIndex = Math.floor(Math.random() * placeholders.length)
@@ -75,43 +75,29 @@ onMounted(() => {
     placeholder.value = getRandomPlaceholder()
 })
 
-const selectedOption = ref(props.option)
-const isDropdownOpen = ref(false)
-const options = ['Title', 'Ingredients']
-
-const input = ref('')
-
-const recipesUrl = 'http://localhost:3000'
-
-const emit = defineEmits(['recipes-fetched'])
-
 const getRecipes = async () => {
-    if (!input.value) {
-        console.error('Input is empty')
-        return
-    }
+    if (!input.value) return
 
     const searchType =
         selectedOption.value.toLowerCase() === 'title' ? 'title' : 'ingredient'
     const searchUrl = `${recipesUrl}/recipes/search/${searchType}/${input.value}`
 
     try {
-        const response = await axios.get(searchUrl)
-        emit('recipes-fetched', response.data)
+        const { data } = await axios.get(searchUrl)
+        emit('recipes-fetched', data)
+        router.push({
+            path: '/search',
+            query: { type: searchType, query: input.value },
+        })
     } catch (error) {
         console.error('Error fetching recipes:', error)
     }
-
-    router.push('/search')
 }
 
-function selectOption(option: string) {
+const toggleDropdown = () => (isDropdownOpen.value = !isDropdownOpen.value)
+const selectOption = (option: string) => {
     selectedOption.value = option
     isDropdownOpen.value = false
-}
-
-function toggleDropdown() {
-    isDropdownOpen.value = !isDropdownOpen.value
 }
 </script>
 
