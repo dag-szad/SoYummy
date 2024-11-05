@@ -2,7 +2,7 @@
     <div class="search-page">
         <page-title title="Search" />
         <search-bar addon @recipes-fetched="handleRecipes" />
-        <div class="search-recipes">
+        <div class="search__recipes" v-if="recipes.length !== 0">
             <router-link
                 v-for="recipe in recipes"
                 :key="recipe._id"
@@ -16,6 +16,26 @@
                 />
                 <h3 class="recipe__title">{{ recipe.title }}</h3>
             </router-link>
+        </div>
+        <div v-else class="search__else">
+            <img
+                src="/src/assets/images/searchPage/search-mobile@1x.png"
+                alt="Login page image"
+                class="login__image"
+                :srcset="`
+                    /src/assets/images/searchPage/search-mobile@1x.png 250w,
+                    /src/assets/images/searchPage/search-mobile@2x.png 500w,
+                    /src/assets/images/searchPage/search-tablet@1x.png 450w,
+                    /src/assets/images/searchPage/search-tablet@2x.png 900w,
+                    /src/assets/images/searchPage/search-desktop@1x.png 550w,
+                    /src/assets/images/searchPage/search-desktop@2x.png 1100w
+                    `"
+                sizes="(max-width: 767px) 250px, 
+                (min-width: 768px) and (max-width: 1099px) 450px, 
+                (min-width: 1100px) 550px"
+            />
+            <p v-if="searchFailed">Try something else...</p>
+            <p v-else>Try looking for something...</p>
         </div>
     </div>
 </template>
@@ -32,9 +52,11 @@ interface Recipe {
 }
 
 const recipes = ref<Recipe[]>([])
+const searchFailed = ref<boolean>(false)
 
-function handleRecipes(data: any) {
+function handleRecipes(data: Recipe[]) {
     recipes.value = data
+    searchFailed.value = data.length === 0
 }
 </script>
 
@@ -43,29 +65,54 @@ function handleRecipes(data: any) {
     display: flex;
     flex-direction: column;
     gap: 40px;
-}
 
-.search-recipes {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    grid-gap: 32px;
-
-    margin: 0 auto;
+    padding-bottom: 75px;
 
     @media (min-width: 768px) {
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 40px 32px;
+        padding-bottom: 100px;
+    }
+}
+
+.search {
+    &__recipes {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 32px;
+
+        margin: 0 auto;
+
+        @media (min-width: 768px) {
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 40px 32px;
+        }
+
+        @media (min-width: 1100px) {
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 64px 16px;
+        }
     }
 
-    @media (min-width: 1100px) {
-        grid-template-columns: repeat(4, 1fr);
-        grid-gap: 64px 16px;
+    &__else {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--main-txt-transparent);
+
+        transition: color 0.3s ease-in-out;
+
+        @media (min-width: 768px) {
+            gap: 32px;
+            font-size: 1.5rem;
+        }
     }
 }
 
 .recipe {
     position: relative;
-    z-index: 1;
 
     max-width: 350px;
 
