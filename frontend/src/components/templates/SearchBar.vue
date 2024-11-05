@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, onMounted } from 'vue'
+import { defineProps, defineEmits, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 
@@ -53,12 +53,6 @@ const props = defineProps({
         default: false,
     },
 })
-
-interface Recipe {
-    _id: string
-    title: string
-    thumb: string
-}
 
 const placeholders = [
     'Search recipes...',
@@ -81,14 +75,15 @@ onMounted(() => {
     placeholder.value = getRandomPlaceholder()
 })
 
-const input = ref('')
-
-const recipesUrl = 'http://localhost:3000'
-const recipes = ref<Recipe[]>([])
-
 const selectedOption = ref(props.option)
 const isDropdownOpen = ref(false)
 const options = ['Title', 'Ingredients']
+
+const input = ref('')
+
+const recipesUrl = 'http://localhost:3000'
+
+const emit = defineEmits(['recipes-fetched'])
 
 const getRecipes = async () => {
     if (!input.value) {
@@ -102,8 +97,7 @@ const getRecipes = async () => {
 
     try {
         const response = await axios.get(searchUrl)
-        recipes.value = response.data
-        console.log(recipes.value)
+        emit('recipes-fetched', response.data)
     } catch (error) {
         console.error('Error fetching recipes:', error)
     }
