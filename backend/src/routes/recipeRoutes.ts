@@ -22,6 +22,6 @@ router.get('/:id', getRecipeById)
 router.get('/search/title/:keyword', searchRecipesByTitle)
 
 // Wyszukiwanie przepisów według składnika
-router.get('/search/ingredient/:ingredient', searchRecipesByIngredient)
+router.get('/search/ingredient/:ingredientName', searchRecipesByIngredient)
 
 export default router
