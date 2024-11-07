@@ -32,7 +32,10 @@
                         <span>Delicious and healthy</span> way to enjoy a
                         variety of fresh ingredients in one satisfying meal
                     </p>
-                    <router-link to="/categories" class="addon__link">
+                    <router-link
+                        to="/recipes/category/breakfast"
+                        class="addon__link"
+                    >
                         <p class="addon__link-text">See recipes</p>
                         <svg class="addon__link-icon">
                             <use
@@ -48,6 +51,9 @@
             <main-page-category category="vegan" />
             <main-page-category category="vegetarian" />
             <main-page-category category="dessert" />
+            <router-link to="/categories" class="categories__button"
+                >Other categories</router-link
+            >
         </div>
     </div>
     <div class="trapezoid"></div>
@@ -264,6 +270,29 @@ onBeforeUnmount(() => {
 
     @media (min-width: 1100px) {
         gap: 75px;
+    }
+
+    &__button {
+        font-size: 0.875rem;
+
+        background-color: transparent;
+        color: var(--main-txt);
+        border-radius: 24px 44px;
+        border: 1px solid var(--main-accent);
+
+        padding: 14px 32px;
+
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            background-color: var(--main-accent);
+            color: var(--main-btn-txt);
+        }
+
+        @media (min-width: 768px) {
+            font-size: 1rem;
+            padding: 20px 52px;
+        }
     }
 }
 
