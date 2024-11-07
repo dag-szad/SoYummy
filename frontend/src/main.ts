@@ -11,8 +11,9 @@ import Login from './components/pages/Login.vue'
 import SharedLayout from './components/pages/SharedLayout.vue'
 
 import MainPage from './components/pages/MainPage.vue'
-import Search from './components/pages/Search.vue'
-import NotFound from './components/pages/NotFound.vue'
+import CategoriesPage from './components/pages/CategoriesPage.vue'
+import SearchPage from './components/pages/SearchPage.vue'
+import NotFoundPage from './components/pages/NotFoundPage.vue'
 
 const setTheme = (theme: string) => {
     const existingLink = document.getElementById('theme-style')
@@ -52,10 +53,12 @@ const router = createRouter({
             meta: { requiresAuth: true },
             children: [
                 { path: '', component: MainPage, meta: { title: 'Main Page' } },
-                { path: '/search', component: Search, meta: { title: 'Search' } },
+                { path: '/categories', component: CategoriesPage, meta: { title: 'Categories' } },
+                { path: '/categories/:categoryTitle', component: CategoriesPage, meta: { title: 'Category' } },
+                { path: '/search', component: SearchPage, meta: { title: 'Search' } },
                 {
                     path: '/:pathMatch(.*)*',
-                    component: NotFound,
+                    component: NotFoundPage,
                     meta: { title: '404' },
                 },
             ],

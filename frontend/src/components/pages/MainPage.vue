@@ -33,7 +33,7 @@
                         variety of fresh ingredients in one satisfying meal
                     </p>
                     <router-link
-                        to="/recipes/category/breakfast"
+                        to="/categories/breakfast"
                         class="addon__link"
                     >
                         <p class="addon__link-text">See recipes</p>

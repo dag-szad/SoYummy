@@ -45,7 +45,7 @@ interface Recipe {
 const recipes = ref<Recipe[]>([])
 
 const recipeUrl = 'http://localhost:3000'
-const moreRecipes = `/recipes/category/${props.category}`
+const moreRecipes = `/categories/${props.category}`
 
 const getRecipeLimit = () => {
     const width = window.innerWidth
