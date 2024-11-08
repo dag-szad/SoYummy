@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import Recipe from '../models/Recipe'
+import Ingredient from '../models/Ingredient'
 
 // Pobranie przepisów według kategorii
 export const getRecipesByCategory = async (
@@ -76,11 +77,31 @@ export const searchRecipesByIngredient = async (
     req: Request,
     res: Response
 ): Promise<void> => {
-    const { ingredient } = req.params
+    const { ingredientName } = req.params
+
+    if (!ingredientName) {
+        res.status(400).json({ message: 'Ingredient name is required' })
+        return
+    }
 
     try {
-        const recipes = await Recipe.find({ ingredients: ingredient })
+        const ingredient = await Ingredient.findOne({ ttl: { $regex: ingredientName, $options: 'i' } })
+
+        if (!ingredient) {
+            res.status(404).json({ message: 'Ingredient not found' })
+            return
+        }
+
+        const recipes = await Recipe.find({
+            ingredients: { $elemMatch: { id: ingredient._id } }
+        });
+
         res.status(200).json(recipes)
+
+        if (recipes.length === 0) {
+            res.status(404).json({ message: 'No recipes found for this ingredient' })
+            return
+        }
     } catch (error) {
         console.error(error)
         res.status(500).json({ message: 'Server error' })

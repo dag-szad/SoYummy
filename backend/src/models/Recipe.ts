@@ -1,5 +1,10 @@
 import mongoose, { Document, Schema } from 'mongoose'
 
+interface IIngredients {
+    id: mongoose.Schema.Types.ObjectId;
+    measure?: string;
+}
+
 interface IRecipe extends Document {
     title: string
     category: string
@@ -7,7 +12,7 @@ interface IRecipe extends Document {
     instructions?: string
     description?: string
     thumb?: string
-    ingredients: string[]
+    ingredients: IIngredients[];
 }
 
 const recipeSchema: Schema = new Schema({
@@ -17,7 +22,10 @@ const recipeSchema: Schema = new Schema({
     instructions: { type: String },
     description: { type: String },
     thumb: { type: String },
-    ingredients: [{ type: String }],
+    ingredients: [{
+        id: { type: mongoose.Schema.Types.ObjectId, ref: 'Ingredient', required: true },
+        measure: { type: String }
+    }],
 })
 
 export default mongoose.model<IRecipe>('Recipe', recipeSchema)

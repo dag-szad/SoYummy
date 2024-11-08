@@ -24,4 +24,16 @@ import FooterComponent from '../templates/FooterComponent.vue'
     background-color: var(--main-bg);
     transition: background-color 0.3s ease-in-out;
 }
+
+main {
+    padding: 16px;
+
+    @media (min-width: 768px) {
+        padding: 50px;
+    }
+
+    @media (min-width: 1100px) {
+        padding: 64px;
+    }
+}
 </style>

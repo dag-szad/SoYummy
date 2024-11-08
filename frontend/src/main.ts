@@ -3,12 +3,18 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { createPinia } from 'pinia'
 
 import App from './App.vue'
+
 import HomePage from './components/pages/HomePage.vue'
 import Register from './components/pages/Register.vue'
 import Login from './components/pages/Login.vue'
+
 import SharedLayout from './components/pages/SharedLayout.vue'
+
 import MainPage from './components/pages/MainPage.vue'
-import NotFound from './components/pages/NotFound.vue'
+import CategoriesPage from './components/pages/CategoriesPage.vue'
+import RecipePage from './components/pages/RecipePage.vue'
+import SearchPage from './components/pages/SearchPage.vue'
+import NotFoundPage from './components/pages/NotFoundPage.vue'
 
 const setTheme = (theme: string) => {
     const existingLink = document.getElementById('theme-style')
@@ -48,9 +54,13 @@ const router = createRouter({
             meta: { requiresAuth: true },
             children: [
                 { path: '', component: MainPage, meta: { title: 'Main Page' } },
+                { path: '/categories', component: CategoriesPage, meta: { title: 'Categories' } },
+                { path: '/categories/:categoryTitle', component: CategoriesPage, meta: { title: 'Category' } },
+                { path: '/recipes/:recipeId', component: RecipePage, meta: { title: 'Recipe' } },
+                { path: '/search', component: SearchPage, meta: { title: 'Search' } },
                 {
                     path: '/:pathMatch(.*)*',
-                    component: NotFound,
+                    component: NotFoundPage,
                     meta: { title: '404' },
                 },
             ],

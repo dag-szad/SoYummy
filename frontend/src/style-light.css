@@ -9,9 +9,10 @@
 
     --main-bg: #fafafa;
     --main-txt: #22252a;
-    --main-txt-transparent: #22252abf;
+    --main-txt-transparent: #22252a88;
     --main-accent: #8baa36;
     --main-accent-hover: #a1c04c;
+    --main-btn-txt: #fafafa;
 
     --home-txt: #fafafa;
     --home-btn: #8baa36;
@@ -41,6 +42,8 @@
     --main-page-addon: #ffffff;
     --main-page-btn: #fafafa;
 
+    --category-list: #22252a33;
+
     --footer-bg: #22252a;
     --footer-txt: #fafafa;
     --footer-txt-hov: #a1c04c;
@@ -52,6 +55,14 @@
     --social-col-hover: #a1c04c;
 
     --addon-txt: #22252a80;
+
+    --search-form-bg: #ffffff;
+    --search-form-border: #f0f0f0;
+    --search-btn-txt: #fafafa;
+    --search-pick-bg: #f4f4f4;
+    --search-pick-bg-hover: #fafafa;
+    --search-pick-border: #fafafa33;
+    --search-pick-txt: #7a7a7a;
 
     --alert-yellow: #f6c23e;
     --error-red: #e74a3b;
@@ -83,11 +94,11 @@ ul {
 }
 
 ::-moz-selection {
-    color: var(--main-white);
-    background: var(--main-green);
+    color: white;
+    background: var(--main-accent);
 }
 
 ::selection {
-    color: var(--main-white);
-    background: var(--main-green);
+    color: white;
+    background: var(--main-accent);
 }
