@@ -12,6 +12,7 @@ import SharedLayout from './components/pages/SharedLayout.vue'
 
 import MainPage from './components/pages/MainPage.vue'
 import CategoriesPage from './components/pages/CategoriesPage.vue'
+import RecipePage from './components/pages/RecipePage.vue'
 import SearchPage from './components/pages/SearchPage.vue'
 import NotFoundPage from './components/pages/NotFoundPage.vue'
 
@@ -55,6 +56,7 @@ const router = createRouter({
                 { path: '', component: MainPage, meta: { title: 'Main Page' } },
                 { path: '/categories', component: CategoriesPage, meta: { title: 'Categories' } },
                 { path: '/categories/:categoryTitle', component: CategoriesPage, meta: { title: 'Category' } },
+                { path: '/recipes/:recipeId', component: RecipePage, meta: { title: 'Recipe' } },
                 { path: '/search', component: SearchPage, meta: { title: 'Search' } },
                 {
                     path: '/:pathMatch(.*)*',
