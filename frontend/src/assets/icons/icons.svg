@@ -1,5 +1,9 @@
 <svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <defs>
+<symbol id="clock-icon" viewBox="0 0 32 32">
+<path stroke-width="2.9714" stroke-miterlimit="4" stroke-linecap="round" stroke-linejoin="round" d="M16 29.326c7.36 0 13.326-5.966 13.326-13.326s-5.966-13.326-13.326-13.326v0c-7.36 0-13.326 5.966-13.326 13.326s5.966 13.326 13.326 13.326v0z"></path>
+<path stroke-width="2.9714" stroke-miterlimit="4" stroke-linecap="round" stroke-linejoin="round" d="M16 8v8l5.326 2.674"></path>
+</symbol>
 <symbol id="alt-arrow-down-icon" viewBox="0 0 34 32">
 <path fill="none" stroke="#8baa36" stroke-width="2.9714" stroke-miterlimit="4" stroke-linecap="round" stroke-linejoin="round" d="M9.143 12l8 8 8-8"></path>
 </symbol>
