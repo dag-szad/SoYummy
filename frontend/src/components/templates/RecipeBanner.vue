@@ -1,19 +1,25 @@
 <template>
     <div class="banner">
         <div class="banner__image"></div>
-        <h1 class="banner__title">Recipe Title</h1>
-        <p class="banner__desc">Recipe description.</p>
+        <h1 class="banner__title">{{ title }}</h1>
+        <p class="banner__desc">{{ description }}</p>
         <button class="banner__button">Add to favorite recipes</button>
         <div class="banner__time">
             <svg class="banner__icon">
                 <use href="../../assets/icons/icons.svg#clock-icon"></use>
             </svg>
-            <p>Recipe time</p>
+            <p>{{ time }} min</p>
         </div>
     </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps<{
+    title: string
+    description: string
+    time: string
+}>()
+</script>
 
 <style lang="scss" scope>
 .banner {
@@ -41,7 +47,7 @@
 
         @media (min-width: 768px) {
             background-image: url('../../assets/images/recipePage/recipe-banner-tablet@1x.png');
-            height: 495px;
+            height: 525px;
 
             @media only screen and (-webkit-min-device-pixel-ratio: 2),
                 only screen and (min-resolution: 192dpi) {
@@ -64,6 +70,7 @@
     }
 
     &__title {
+        text-align: center;
         position: relative;
 
         font-size: 1.5rem;
@@ -77,6 +84,9 @@
     }
 
     &__desc {
+        text-align: center;
+        max-width: 300px;
+
         position: relative;
 
         font-size: 0.75rem;
@@ -86,6 +96,11 @@
 
         @media (min-width: 768px) {
             font-size: 1.125rem;
+            max-width: 500px;
+        }
+
+        @media (min-width: 1100px) {
+            max-width: 650px;
         }
     }
 
