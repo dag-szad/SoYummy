@@ -81,7 +81,7 @@ defineProps<{
         align-items: center;
         gap: 32px;
 
-        background-color: var(--recipe-ing-bg);
+        background-color: var(--recipe-bg);
         border-radius: 8px;
 
         list-style: none;
@@ -118,7 +118,7 @@ defineProps<{
     }
 
     &__title {
-        color: var(--recipe-ing-txt);
+        color: var(--recipe-txt);
         font-size: 0.75rem;
         font-weight: 400;
 
