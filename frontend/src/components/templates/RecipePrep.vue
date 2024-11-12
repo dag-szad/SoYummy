@@ -107,6 +107,16 @@ const imageSrc = props.preview
 
             min-width: 24px;
             height: 24px;
+
+            @media (min-width: 768px) {
+                min-width: 28px;
+                height: 28px;
+            }
+
+            @media (min-width: 1100px) {
+                min-width: 30px;
+                height: 30px;
+            }
         }
     }
 

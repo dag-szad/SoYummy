@@ -6,7 +6,7 @@
             :time="recipe.time"
         />
         <recipe-ing :ingredients="recipe.ingredients" />
-        <recipe-prep :instructions="recipe.instructions" />
+        <recipe-prep :instructions="recipe.instructions" :preview="recipe.thumb" />
     </div>
 </template>
 
@@ -30,6 +30,7 @@ interface Recipe {
     description: string
     time: string
     instructions: string
+    thumb: string
     ingredients: Ingredient[]
 }
 

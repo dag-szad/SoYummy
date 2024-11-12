@@ -47,7 +47,7 @@ defineProps<{
 
         @media (min-width: 768px) {
             background-image: url('../../assets/images/recipePage/recipe-banner-tablet@1x.png');
-            height: 495px;
+            height: 525px;
 
             @media only screen and (-webkit-min-device-pixel-ratio: 2),
                 only screen and (min-resolution: 192dpi) {
@@ -70,6 +70,7 @@ defineProps<{
     }
 
     &__title {
+        text-align: center;
         position: relative;
 
         font-size: 1.5rem;
@@ -83,6 +84,9 @@ defineProps<{
     }
 
     &__desc {
+        text-align: center;
+        max-width: 300px;
+
         position: relative;
 
         font-size: 0.75rem;
@@ -92,6 +96,11 @@ defineProps<{
 
         @media (min-width: 768px) {
             font-size: 1.125rem;
+            max-width: 500px;
+        }
+
+        @media (min-width: 1100px) {
+            max-width: 650px;
         }
     }
 
