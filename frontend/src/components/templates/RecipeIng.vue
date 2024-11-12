@@ -5,12 +5,14 @@
             <li>Number</li>
             <li>Add to list</li>
         </ul>
-        <ul>
-            <li>
-                <img src="" alt="" />
-                <h3>Title</h3>
-                <p>3 chopped</p>
-                <input type="checkbox" />
+        <ul class="ing__list">
+            <li class="ing__item">
+                <div class="ing__header">
+                    <img src="" alt="" class="ing__img" />
+                    <h3 class="ing__title">Title</h3>
+                </div>
+                <p class="ing__amount">3 chopped</p>
+                <input type="checkbox" class="ing__checkbox" />
             </li>
         </ul>
     </div>
@@ -42,6 +44,7 @@
         list-style: none;
 
         padding: 12px 14px;
+        margin-bottom: 24px;
 
         li:first-child {
             flex-grow: 2;
@@ -51,11 +54,80 @@
             gap: 40px;
             font-size: 1.125rem;
             padding: 21px 32px;
+            margin-bottom: 32px;
+        }
+
+        @media (min-width: 1100px) {
+            gap: 110px;
+            padding: 21px 40px;
+            margin-bottom: 50px;
+        }
+    }
+
+    &__item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 32px;
+
+        background-color: var(--recipe-ing-bg);
+        border-radius: 8px;
+
+        list-style: none;
+
+        padding: 12px 14px;
+        margin-top: 16px;
+
+        div:first-child {
+            flex-grow: 2;
         }
 
         @media (min-width: 768px) {
+            gap: 40px;
+            font-size: 1.125rem;
+            padding: 21px 32px;
+            margin-top: 24px;
+        }
+
+        @media (min-width: 1100px) {
             gap: 110px;
             padding: 21px 40px;
+        }
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    &__img {
+        width: 65px;
+        height: 65px;
+    }
+
+    &__title {
+        color: var(--recipe-ing-txt);
+        font-size: 0.75rem;
+        font-weight: 400;
+
+        @media (min-width: 768px) {
+            font-size: 1.5rem;
+        }
+    }
+
+    &__amount {
+        background-color: var(--main-accent);
+        border-radius: 4px;
+
+        color: var(--main-btn-txt);
+        font-size: 0.625rem;
+        font-weight: 500;
+
+        padding: 4px 8px;
+
+        @media (min-width: 768px) {
+            font-size: 1.125rem;
         }
     }
 }
