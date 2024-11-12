@@ -37,7 +37,7 @@ defineProps<{
     max-width: 1240px;
 
     @media (min-width: 768px) {
-        margin: 115px auto 100px;
+        margin: 150px auto 100px;
     }
 
     &__titles {
