@@ -6,19 +6,30 @@
             <li>Add to list</li>
         </ul>
         <ul class="ing__list">
-            <li class="ing__item">
+            <li
+                v-for="ingredient in ingredients"
+                :key="ingredient.id"
+                class="ing__item"
+            >
                 <div class="ing__header">
                     <img src="" alt="" class="ing__img" />
-                    <h3 class="ing__title">Title</h3>
+                    <h3 class="ing__title">{{ ingredient.id }}</h3>
                 </div>
-                <p class="ing__amount">3 chopped</p>
+                <p class="ing__amount">{{ ingredient.measure }}</p>
                 <input type="checkbox" class="ing__checkbox" />
             </li>
         </ul>
     </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps<{
+    ingredients: Array<{
+        id: string
+        measure: string
+    }>
+}>()
+</script>
 
 <style lang="scss" scope>
 .ing {
