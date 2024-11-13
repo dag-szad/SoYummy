@@ -7,15 +7,17 @@
         </ul>
         <ul class="ing__list">
             <li
-                v-for="ingredient in ingredients"
-                :key="ingredient.id"
+                v-for="(ingredient, index) in ingredientDetails"
+                :key="ingredient._id"
                 class="ing__item"
             >
                 <div class="ing__header">
-                    <img src="" alt="" class="ing__img" />
-                    <h3 class="ing__title">{{ ingredient.id }}</h3>
+                    <img :src="ingredient.thb" alt="" class="ing__img" />
+                    <h3 class="ing__title">{{ ingredient.ttl }}</h3>
                 </div>
-                <p class="ing__amount">{{ ingredient.measure }}</p>
+                <p class="ing__amount">
+                    {{ props.ingredients[index].measure }}
+                </p>
                 <input type="checkbox" class="ing__checkbox" />
             </li>
         </ul>
@@ -23,12 +25,40 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+
+const props = defineProps<{
     ingredients: Array<{
         id: string
         measure: string
     }>
 }>()
+
+interface Ingredient {
+    _id: string
+    ttl: string
+    desc?: string
+    thb?: string
+}
+
+const ingredientDetails = ref<Ingredient[]>([])
+
+const fetchIngredients = async () => {
+    try {
+        const responses = await Promise.all(
+            props.ingredients.map((ingredient) =>
+                axios.get(`http://localhost:3000/ingredient/${ingredient.id}`)
+            )
+        )
+
+        ingredientDetails.value = responses.map((response) => response.data)
+    } catch (error) {
+        console.error('Error fetching ingredients:', error)
+    }
+}
+
+onMounted(fetchIngredients)
 </script>
 
 <style lang="scss" scope>
