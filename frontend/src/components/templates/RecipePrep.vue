@@ -21,7 +21,9 @@ const props = defineProps<{
     preview: string
 }>()
 
-const steps = props.instructions.split('.').filter((step) => step.trim() !== '')
+const steps = props.instructions
+    .split('.')
+    .filter((step) => step.trim().length >= 5)
 
 const imageSrc = props.preview
 </script>
@@ -30,12 +32,14 @@ const imageSrc = props.preview
 .prep {
     display: flex;
     flex-direction: column;
+    max-width: 1240px;
     gap: 40px;
 
     margin-bottom: 100px;
 
     @media (min-width: 1100px) {
         flex-direction: row;
+        margin: 0 auto;
         gap: 50px;
     }
 
