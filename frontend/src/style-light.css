@@ -44,6 +44,10 @@
 
     --category-list: #22252a33;
 
+    --recipe-bg: #ebf3d4;
+    --recipe-txt: #3e4462;
+    --recipe-prep-txt: #000000cc;
+
     --footer-bg: #22252a;
     --footer-txt: #fafafa;
     --footer-txt-hov: #a1c04c;
