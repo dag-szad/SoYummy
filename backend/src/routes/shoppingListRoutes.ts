@@ -3,6 +3,7 @@ import {
     addToList,
     deleteFromList,
     deleteList,
+    getList,
 } from '../controllers/shoppingListController'
 
 const router = express.Router()
@@ -15,5 +16,8 @@ router.delete('/:listId/items/:itemId', deleteFromList)
 
 // Usuwanie całej listy
 router.delete('/:listId/items', deleteList)
+
+// Pobranie całej listy
+router.get('/:listId', getList)
 
 export default router
