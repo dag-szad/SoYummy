@@ -1,7 +1,9 @@
 import { Request, Response } from 'express'
+import mongoose from 'mongoose'
 import jwt from 'jsonwebtoken'
 
 import User, { IUser } from '../models/User'
+import ShoppingList from '../models/ShoppingList'
 import Blacklist from '../models/Blacklist'
 
 import { validationResult } from 'express-validator'
@@ -28,6 +30,16 @@ export const registerUser = async (
         const newUser = new User({ username, email, password })
         await newUser.save()
 
+        const shoppingList = new ShoppingList({
+            userId: newUser._id,
+            items: [],
+        })
+        await shoppingList.save()
+
+        newUser.shoppingListId =
+            shoppingList._id as mongoose.Schema.Types.ObjectId
+        await newUser.save()
+
         const token = jwt.sign(
             { id: newUser._id },
             process.env.JWT_SECRET || 'your_jwt_secret',
@@ -40,6 +52,7 @@ export const registerUser = async (
             userId: newUser._id,
             username: newUser.username,
             profilePicture: newUser.profilePicture,
+            shoppingListId: shoppingList._id,
         })
     } catch (error) {
         console.error('Error during registration:', error)

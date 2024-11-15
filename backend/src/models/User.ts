@@ -1,4 +1,4 @@
-import { Document, Schema, model } from 'mongoose'
+import mongoose, { Document, Schema, model } from 'mongoose'
 import bcrypt from 'bcrypt'
 
 export interface IUser extends Document {
@@ -6,6 +6,7 @@ export interface IUser extends Document {
     email: string
     password: string
     profilePicture: string
+    shoppingListId?: mongoose.Schema.Types.ObjectId
     comparePassword(candidatePassword: string): Promise<boolean>
 }
 
@@ -30,6 +31,11 @@ const userSchema = new Schema<IUser>(
             minlength: 6,
         },
         profilePicture: { type: String, default: '' },
+        shoppingListId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'ShoppingList',
+            default: null,
+        },
     },
     {
         timestamps: true,
