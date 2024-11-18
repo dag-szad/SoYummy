@@ -94,6 +94,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
             userId: user._id,
             username: user.username,
             profilePicture: user.profilePicture,
+            shoppingListId: user.shoppingListId,
         })
     } catch (error) {
         console.error('Error during login:', error)
