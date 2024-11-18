@@ -30,7 +30,7 @@
             <ul class="ing__titles">
                 <li>Ingredients</li>
                 <li>Number</li>
-                <li>Add to List</li>
+                <li>Remove</li>
             </ul>
             <ul class="ing__list">
                 <li
@@ -45,13 +45,17 @@
                     <p class="ing__amount">
                         {{ shoppingList[index].measure }}
                     </p>
-                    <input
-                        type="checkbox"
-                        class="ing__checkbox"
-                        v-model="shoppingList[index].isPurchased"
-                    />
+                    <svg
+                        class="list__icon"
+                        @click="deleteIngredient(ingredient._id, index)"
+                    >
+                        <use
+                            href="../../assets/icons/icons.svg#cancel-icon"
+                        ></use>
+                    </svg>
                 </li>
             </ul>
+            <button @click="deleteAllIngredients">Delete all list items</button>
         </div>
     </div>
 </template>
@@ -108,6 +112,40 @@ const fetchIngredients = async () => {
         ingredientDetails.value = responses.map((response) => response.data)
     } catch (error) {
         console.error('Error fetching ingredients:', error)
+    }
+}
+
+const deleteIngredient = async (ingredientId: string, index: number) => {
+    if (!shoppingListId) {
+        console.error('Shopping list ID is not available')
+        return
+    }
+
+    try {
+        await axios.delete(
+            `http://localhost:3000/list/${shoppingListId}/items/${ingredientId}`
+        )
+
+        shoppingList.value.splice(index, 1)
+        ingredientDetails.value.splice(index, 1)
+    } catch (error) {
+        console.error('Error deleting ingredient:', error)
+    }
+}
+
+const deleteAllIngredients = async () => {
+    if (!shoppingListId) {
+        console.error('Shopping list ID is not available')
+        return
+    }
+
+    try {
+        await axios.delete(`http://localhost:3000/list/${shoppingListId}/items`)
+
+        shoppingList.value = []
+        ingredientDetails.value = []
+    } catch (error) {
+        console.error('Error deleting list:', error)
     }
 }
 
@@ -171,6 +209,20 @@ onMounted(() => {
 
         @media (min-width: 768px) {
             font-size: 1.125rem;
+        }
+    }
+
+    &__icon {
+        cursor: pointer;
+
+        width: 20px;
+        height: 20px;
+
+        stroke: var(--recipe-txt);
+
+        @media (min-width: 768px) {
+            width: 25px;
+            height: 25px;
         }
     }
 }
