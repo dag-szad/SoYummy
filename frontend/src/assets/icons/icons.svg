@@ -1,5 +1,8 @@
 <svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <defs>
+<symbol id="check-icon" viewBox="0 0 32 32">
+<path d="M26.152 1.404c0.582-0.866 1.558-1.428 2.665-1.428 1.767 0 3.2 1.433 3.2 3.2 0 0.681-0.212 1.311-0.575 1.83l0.007-0.010-17.355 25.6c-0.584 0.852-1.552 1.404-2.648 1.404s-2.065-0.552-2.641-1.393l-0.007-0.011-8.245-12.16c-0.355-0.508-0.568-1.139-0.568-1.82 0-1.767 1.433-3.2 3.2-3.2 1.107 0 2.083 0.562 2.657 1.417l0.007 0.011 5.596 8.254 14.707-21.696z"></path>
+</symbol>
 <symbol id="clock-icon" viewBox="0 0 32 32">
 <path stroke-width="2.9714" stroke-miterlimit="4" stroke-linecap="round" stroke-linejoin="round" d="M16 29.326c7.36 0 13.326-5.966 13.326-13.326s-5.966-13.326-13.326-13.326v0c-7.36 0-13.326 5.966-13.326 13.326s5.966 13.326 13.326 13.326v0z"></path>
 <path stroke-width="2.9714" stroke-miterlimit="4" stroke-linecap="round" stroke-linejoin="round" d="M16 8v8l5.326 2.674"></path>

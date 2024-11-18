@@ -145,6 +145,7 @@ const handleSubmit = async () => {
                 userId: response.data.userId,
                 username: response.data.username,
                 profilePicture: response.data.profilePicture,
+                shoppingListId: response.data.shoppingListId,
             })
             router.push('/main')
         } else {
