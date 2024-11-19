@@ -11,6 +11,7 @@ import userRoutes from './routes/userRoutes'
 import categoryRoutes from './routes/categoryRoutes'
 import ingredientRoutes from './routes/ingredientRoutes'
 import shoppingListRoutes from './routes/shoppingListRoutes'
+import favoriteListRoutes from './routes/favoriteListRouter'
 import recipeRoutes from './routes/recipeRoutes'
 
 import { errorHandler } from './middleware/errorHandler'
@@ -30,6 +31,7 @@ app.use('/api/users', userRoutes)
 app.use('/categories', categoryRoutes)
 app.use('/ingredient', ingredientRoutes)
 app.use('/list', shoppingListRoutes)
+app.use('/favorite', favoriteListRoutes)
 app.use('/recipes', recipeRoutes)
 
 const uploadsDir = path.join(__dirname, '../uploads')
