@@ -26,7 +26,7 @@
                 >Browse recipes</router-link
             >
         </div>
-        <div v-else>
+        <div v-else class="list__basic">
             <ul class="ing__titles">
                 <li>Ingredients</li>
                 <li>Number</li>
@@ -55,7 +55,9 @@
                     </svg>
                 </li>
             </ul>
-            <button @click="deleteAllIngredients">Delete all list items</button>
+            <button class="list__button" @click="deleteAllIngredients">
+                Delete all list items
+            </button>
         </div>
     </div>
 </template>
@@ -160,6 +162,11 @@ onMounted(() => {
     flex-direction: column;
     gap: 40px;
 
+    &__basic {
+        display: flex;
+        flex-direction: column;
+    }
+
     &__alt {
         display: flex;
         flex-direction: column;
@@ -223,6 +230,32 @@ onMounted(() => {
         @media (min-width: 768px) {
             width: 25px;
             height: 25px;
+        }
+    }
+
+    &__button {
+        background-color: transparent;
+        border: 1px solid var(--main-accent);
+        border-radius: 24px 44px;
+
+        color: var(--main-txt);
+        font-size: 0.625rem;
+
+        padding: 10px 20px;
+        margin: 25px auto;
+
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            background-color: var(--main-accent);
+            color: var(--main-btn-txt);
+        }
+
+        @media (min-width: 768px) {
+            font-size: 1rem;
+
+            padding: 20px 40px;
+            margin: 40px auto 0;
         }
     }
 }

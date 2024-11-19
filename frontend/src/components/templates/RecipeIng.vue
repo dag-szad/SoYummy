@@ -186,7 +186,6 @@ onMounted(async () => {
         list-style: none;
 
         padding: 12px 14px;
-        margin-bottom: 24px;
 
         li:first-child {
             flex-grow: 2;
@@ -196,13 +195,11 @@ onMounted(async () => {
             gap: 40px;
             font-size: 1.125rem;
             padding: 21px 32px;
-            margin-bottom: 32px;
         }
 
         @media (min-width: 1100px) {
             gap: 110px;
             padding: 21px 40px;
-            margin-bottom: 50px;
         }
     }
 
