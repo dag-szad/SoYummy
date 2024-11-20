@@ -1,12 +1,8 @@
 import mongoose, { Document, Schema } from 'mongoose'
 
-interface IRecipe {
-    id: mongoose.Schema.Types.ObjectId
-}
-
 interface IFavoriteList extends Document {
     userId: mongoose.Schema.Types.ObjectId
-    recipes: IRecipe[]
+    items: mongoose.Schema.Types.ObjectId[]
 }
 
 const favoriteListSchema: Schema = new Schema({
@@ -15,15 +11,16 @@ const favoriteListSchema: Schema = new Schema({
         ref: 'User',
         required: true,
     },
-    recipes: [
-        {
-            id: {
+    items: {
+        type: [
+            {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Ingredient',
                 required: true,
             },
-        },
-    ],
+        ],
+        default: [],
+    },
 })
 
 export default mongoose.model<IFavoriteList>('FavoriteList', favoriteListSchema)
