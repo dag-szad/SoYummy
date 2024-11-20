@@ -16,10 +16,14 @@ export const addFavorite = async (
             return
         }
 
-        favoriteList.recipes.push({
-            id: recipeId,
-        })
+        if (favoriteList.items.some((item) => item.toString() === recipeId)) {
+            res.status(400).json({
+                message: 'Recipe already in the favorite list',
+            })
+            return
+        }
 
+        favoriteList.items.push(recipeId)
         await favoriteList.save()
 
         res.status(201).json({
@@ -27,7 +31,7 @@ export const addFavorite = async (
             favoriteList,
         })
     } catch (error) {
-        res.status(500).json({ message: 'Server error' })
+        res.status(500).json({ message: 'Server error', error: error })
     }
 }
 
@@ -45,8 +49,8 @@ export const deleteFavorite = async (
             return
         }
 
-        const recipeIndex = favoriteList.recipes.findIndex(
-            (item) => item.id.toString() === recipeId
+        const recipeIndex = favoriteList.items.findIndex(
+            (item) => item.toString() === recipeId
         )
         if (recipeIndex === -1) {
             res.status(404).json({
@@ -55,14 +59,33 @@ export const deleteFavorite = async (
             return
         }
 
-        favoriteList.recipes.splice(recipeIndex, 1)
-
+        favoriteList.items.splice(recipeIndex, 1)
         await favoriteList.save()
 
         res.status(200).json({
             message: 'Item deleted successfully',
             favoriteList,
         })
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' })
+    }
+}
+
+// Pobranie całej listy
+export const getFavorite = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    const { favListId } = req.params
+
+    try {
+        const favoriteList = await FavoriteList.findById(favListId)
+        if (!favoriteList) {
+            res.status(404).json({ message: 'Favorite list not found' })
+            return
+        }
+
+        res.status(200).json(favoriteList)
     } catch (error) {
         res.status(500).json({ message: 'Server error' })
     }
