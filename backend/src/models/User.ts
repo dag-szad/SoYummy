@@ -7,6 +7,7 @@ export interface IUser extends Document {
     password: string
     profilePicture: string
     shoppingListId?: mongoose.Schema.Types.ObjectId
+    favoriteListId?: mongoose.Schema.Types.ObjectId
     comparePassword(candidatePassword: string): Promise<boolean>
 }
 
@@ -34,6 +35,11 @@ const userSchema = new Schema<IUser>(
         shoppingListId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'ShoppingList',
+            default: null,
+        },
+        favoriteListId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'FavoriteList',
             default: null,
         },
     },
