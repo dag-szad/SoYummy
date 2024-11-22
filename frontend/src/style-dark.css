@@ -48,6 +48,14 @@
     --recipe-txt: #fafafa;
     --recipe-prep-txt: #fafafacc;
 
+    --card-bg: #2a2c36;
+    --card-ttl-txt: #fafafa;
+    --card-txt: #fafafa99;
+    --card-del: #1e1f28;
+    --card-del-hov: #22252a;
+    --card-btn: #8baa36;
+    --card-btn-hov: #a1c04c;
+
     --footer-bg: #8baa36;
     --footer-txt: #fafafa;
     --footer-txt-hov: #fafafa;

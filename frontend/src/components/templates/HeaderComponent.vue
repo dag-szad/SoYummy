@@ -13,7 +13,7 @@
                     <router-link to="/my">My recipes</router-link>
                 </li>
                 <li>
-                    <router-link to="/favorite">Favorites</router-link>
+                    <router-link to="/favorites">Favorites</router-link>
                 </li>
                 <li>
                     <router-link to="/list">Shopping list</router-link>

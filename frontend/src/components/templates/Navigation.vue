@@ -24,7 +24,7 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/favorite" @click="closeNav">
+                    <router-link to="/favorites" @click="closeNav">
                         Favorites
                     </router-link>
                 </li>

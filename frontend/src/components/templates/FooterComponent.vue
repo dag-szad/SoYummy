@@ -28,7 +28,7 @@
                     </li>
                     <li><router-link to="/add">Add recipes</router-link></li>
                     <li><router-link to="/my">My recipes</router-link></li>
-                    <li><router-link to="/favorite">Favorite</router-link></li>
+                    <li><router-link to="/favorites">Favorites</router-link></li>
                     <li><router-link to="/list">Shopping list</router-link></li>
                 </ul>
             </nav>
