@@ -16,8 +16,28 @@
                         />
                     </div>
                 </div>
-                <div v-else>
-                    <p>No favorite recipes found.</p>
+                <div v-else class="favorite__alt">
+                    <img
+                        src="/src/assets/images/favoritePage/favorite-mobile@1x.png"
+                        alt="Empty list image"
+                        class="favorite__image"
+                        :srcset="`
+                    /src/assets/images/favoritePage/favorite-mobile@1x.png 250w,
+                    /src/assets/images/favoritePage/favorite-mobile@2x.png 500w,
+                    /src/assets/images/favoritePage/favorite-tablet@1x.png 400w,
+                    /src/assets/images/favoritePage/favorite-tablet@2x.png 800w,
+                    /src/assets/images/favoritePage/favorite-desktop@1x.png 500w,
+                    /src/assets/images/favoritePage/favorite-desktop@2x.png 1000w
+                    `"
+                        sizes="(max-width: 767px) 250px, 
+                (min-width: 768px) and (max-width: 1099px) 400px, 
+                (min-width: 1100px) 500px"
+                    />
+                    <h2 class="favorite__subtitle">Empty list...</h2>
+                    <h3 class="favorite__text">Try adding some recipes!</h3>
+                    <router-link to="/categories" class="favorite__link"
+                        >Browse recipes</router-link
+                    >
                 </div>
             </div>
         </div>
@@ -101,5 +121,57 @@ onMounted(fetchFavoriteRecipes)
     flex-direction: column;
     justify-content: center;
     gap: 40px;
+
+    &__alt {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+
+        @media (min-width: 768px) {
+            gap: 10px;
+        }
+    }
+
+    &__subtitle {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--main-txt);
+        transition: color 0.3s ease-in-out;
+
+        @media (min-width: 768px) {
+            font-size: 1.5rem;
+        }
+    }
+
+    &__text {
+        text-align: center;
+
+        font-size: 0.875rem;
+        font-weight: 400;
+
+        color: var(--main-txt-transparent);
+        transition: color 0.3s ease-in-out;
+
+        @media (min-width: 768px) {
+            font-size: 1.125rem;
+        }
+    }
+
+    &__link {
+        text-decoration: underline;
+        font-size: 0.875rem;
+
+        color: var(--main-accent);
+        transition: color 0.3s ease-in-out;
+
+        &:hover {
+            color: var(--main-accent-hover);
+        }
+
+        @media (min-width: 768px) {
+            font-size: 1.125rem;
+        }
+    }
 }
 </style>
