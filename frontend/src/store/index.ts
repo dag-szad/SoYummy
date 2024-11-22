@@ -5,6 +5,8 @@ interface UserState {
     userId: string | null
     username: string | null
     profilePicture: string | null
+    shoppingListId: string | null
+    favoriteListId: string | null
 }
 
 const BASE_URL = 'http://localhost:3000'
@@ -15,6 +17,8 @@ export const useUserStore = defineStore('user', {
         userId: null,
         username: null,
         profilePicture: null,
+        shoppingListId: null,
+        favoriteListId: null,
     }),
 
     actions: {
@@ -25,11 +29,15 @@ export const useUserStore = defineStore('user', {
             this.profilePicture = data.profilePicture
                 ? `${BASE_URL}/${data.profilePicture}`
                 : null
+            this.shoppingListId = data.shoppingListId
+            this.favoriteListId = data.favoriteListId
 
             localStorage.setItem('token', data.token || '')
             localStorage.setItem('userId', data.userId || '')
             localStorage.setItem('username', data.username || '')
             localStorage.setItem('profilePicture', data.profilePicture || '')
+            localStorage.setItem('shoppingListId', data.shoppingListId || '')
+            localStorage.setItem('favoriteListId', data.favoriteListId || '')
         },
 
         loadUserData() {
@@ -37,6 +45,8 @@ export const useUserStore = defineStore('user', {
             const userId = localStorage.getItem('userId')
             const username = localStorage.getItem('username')
             const profilePicture = localStorage.getItem('profilePicture')
+            const shoppingListId = localStorage.getItem('shoppingListId')
+            const favoriteListId = localStorage.getItem('favoriteListId')
 
             if (token && userId && username) {
                 this.token = token
@@ -45,6 +55,8 @@ export const useUserStore = defineStore('user', {
                 this.profilePicture = profilePicture
                     ? `${BASE_URL}/${profilePicture}`
                     : null
+                this.shoppingListId = shoppingListId
+                this.favoriteListId = favoriteListId
             } else {
                 console.warn('User data not found in localStorage.')
             }
@@ -55,11 +67,14 @@ export const useUserStore = defineStore('user', {
             this.userId = null
             this.username = null
             this.profilePicture = null
+            this.shoppingListId = null
+            this.favoriteListId = null
 
             localStorage.removeItem('token')
             localStorage.removeItem('userId')
             localStorage.removeItem('username')
             localStorage.removeItem('profilePicture')
+            localStorage.removeItem('shoppingListId')
         },
 
         updateUsername(newUsername: string) {
@@ -69,10 +84,7 @@ export const useUserStore = defineStore('user', {
 
         updateProfilePicture(newProfilePicture: string) {
             this.profilePicture = `${BASE_URL}/${newProfilePicture}`
-            localStorage.setItem(
-                'profilePicture',
-                `${newProfilePicture}`
-            )
+            localStorage.setItem('profilePicture', `${newProfilePicture}`)
         },
     },
 })

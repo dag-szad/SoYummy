@@ -13,6 +13,8 @@ import SharedLayout from './components/pages/SharedLayout.vue'
 import MainPage from './components/pages/MainPage.vue'
 import CategoriesPage from './components/pages/CategoriesPage.vue'
 import RecipePage from './components/pages/RecipePage.vue'
+import FavoritesPage from './components/pages/FavoritesPage.vue'
+import ShoppingListPage from './components/pages/ShoppingListPage.vue'
 import SearchPage from './components/pages/SearchPage.vue'
 import NotFoundPage from './components/pages/NotFoundPage.vue'
 
@@ -57,12 +59,10 @@ const router = createRouter({
                 { path: '/categories', component: CategoriesPage, meta: { title: 'Categories' } },
                 { path: '/categories/:categoryTitle', component: CategoriesPage, meta: { title: 'Category' } },
                 { path: '/recipes/:recipeId', component: RecipePage, meta: { title: 'Recipe' } },
+                { path: '/favorites', component: FavoritesPage, meta: { title: 'Favorites' } },
+                { path: '/list', component: ShoppingListPage, meta: { title: 'Shopping list' } },
                 { path: '/search', component: SearchPage, meta: { title: 'Search' } },
-                {
-                    path: '/:pathMatch(.*)*',
-                    component: NotFoundPage,
-                    meta: { title: '404' },
-                },
+                { path: '/:pathMatch(.*)*', component: NotFoundPage, meta: { title: '404' } },
             ],
         },
     ],

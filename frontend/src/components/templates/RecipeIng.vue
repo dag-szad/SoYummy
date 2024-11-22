@@ -18,7 +18,32 @@
                 <p class="ing__amount">
                     {{ props.ingredients[index].measure }}
                 </p>
-                <input type="checkbox" class="ing__checkbox" />
+                <div class="ing__actions">
+                    <button
+                        :class="{
+                            ing__btn: true,
+                            ing__add: !isIngredientInList(ingredient._id),
+                            ing__delete: isIngredientInList(ingredient._id),
+                        }"
+                        @click="
+                            isIngredientInList(ingredient._id)
+                                ? removeIngredientFromList(ingredient._id)
+                                : addIngredientToList(
+                                      ingredient._id,
+                                      props.ingredients[index].measure
+                                  )
+                        "
+                    >
+                        <svg
+                            v-if="isIngredientInList(ingredient._id)"
+                            class="ing__icon"
+                        >
+                            <use
+                                href="../../assets/icons/icons.svg#check-icon"
+                            ></use>
+                        </svg>
+                    </button>
+                </div>
             </li>
         </ul>
     </div>
@@ -42,7 +67,13 @@ interface Ingredient {
     thb?: string
 }
 
+interface ShoppingListItem {
+    id: string
+    measure: string
+}
+
 const ingredientDetails = ref<Ingredient[]>([])
+const shoppingList = ref<ShoppingListItem[]>([])
 
 const fetchIngredients = async () => {
     try {
@@ -58,7 +89,77 @@ const fetchIngredients = async () => {
     }
 }
 
-onMounted(fetchIngredients)
+const fetchShoppingList = async () => {
+    const shoppingListId = localStorage.getItem('shoppingListId')
+
+    if (!shoppingListId) {
+        console.error('Shopping list ID is not available')
+        return
+    }
+
+    try {
+        const response = await axios.get(
+            `http://localhost:3000/list/${shoppingListId}/items`
+        )
+        shoppingList.value = response.data
+    } catch (error) {
+        console.error('Error fetching shopping list:', error)
+    }
+}
+
+const addIngredientToList = async (ingredientId: string, measure: string) => {
+    const shoppingListId = localStorage.getItem('shoppingListId')
+
+    if (!shoppingListId) {
+        console.error('Shopping list ID is not available')
+        return
+    }
+
+    try {
+        await axios.post(`http://localhost:3000/list/${shoppingListId}/items`, {
+            ingredientId,
+            measure,
+        })
+
+        console.log(`Ingredient ${ingredientId} added to the shopping list.`)
+        shoppingList.value.push({ id: ingredientId, measure })
+    } catch (error) {
+        console.error('Error adding ingredient to list:', error)
+    }
+}
+
+const removeIngredientFromList = async (ingredientId: string) => {
+    const shoppingListId = localStorage.getItem('shoppingListId')
+
+    if (!shoppingListId) {
+        console.error('Shopping list ID is not available')
+        return
+    }
+
+    try {
+        await axios.delete(
+            `http://localhost:3000/list/${shoppingListId}/items/${ingredientId}`
+        )
+
+        console.log(
+            `Ingredient ${ingredientId} removed from the shopping list.`
+        )
+        shoppingList.value = shoppingList.value.filter(
+            (item) => item.id !== ingredientId
+        )
+    } catch (error) {
+        console.error('Error removing ingredient from list:', error)
+    }
+}
+
+const isIngredientInList = (ingredientId: string) => {
+    return shoppingList.value.some((item) => item.id === ingredientId)
+}
+
+onMounted(async () => {
+    await fetchIngredients()
+    await fetchShoppingList()
+})
 </script>
 
 <style lang="scss" scope>
@@ -85,7 +186,6 @@ onMounted(fetchIngredients)
         list-style: none;
 
         padding: 12px 14px;
-        margin-bottom: 24px;
 
         li:first-child {
             flex-grow: 2;
@@ -95,13 +195,11 @@ onMounted(fetchIngredients)
             gap: 40px;
             font-size: 1.125rem;
             padding: 21px 32px;
-            margin-bottom: 32px;
         }
 
         @media (min-width: 1100px) {
             gap: 110px;
             padding: 21px 40px;
-            margin-bottom: 50px;
         }
     }
 
@@ -170,6 +268,38 @@ onMounted(fetchIngredients)
         @media (min-width: 768px) {
             font-size: 1.125rem;
         }
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+    }
+
+    &__btn {
+        cursor: pointer;
+        background-color: transparent;
+        border-radius: 4px;
+        border: solid 2px;
+        width: 23px;
+        height: 23px;
+
+        &.ing__add {
+            border-color: #7e7e7e;
+        }
+
+        &.ing__delete {
+            background-color: var(--main-accent);
+            border-color: var(--main-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    &__icon {
+        fill: white;
+        width: 15px;
+        height: 15px;
     }
 }
 </style>

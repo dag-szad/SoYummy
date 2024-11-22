@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 
 import User, { IUser } from '../models/User'
 import ShoppingList from '../models/ShoppingList'
+import FavoriteList from '../models/FavoriteList'
 import Blacklist from '../models/Blacklist'
 
 import { validationResult } from 'express-validator'
@@ -27,8 +28,8 @@ export const registerUser = async (
             res.status(400).json({ message: 'User already exists' })
             return
         }
+
         const newUser = new User({ username, email, password })
-        await newUser.save()
 
         const shoppingList = new ShoppingList({
             userId: newUser._id,
@@ -36,8 +37,17 @@ export const registerUser = async (
         })
         await shoppingList.save()
 
+        const favoriteList = new FavoriteList({
+            userId: newUser._id,
+            items: [],
+        })
+        await favoriteList.save()
+
         newUser.shoppingListId =
             shoppingList._id as mongoose.Schema.Types.ObjectId
+        newUser.favoriteListId =
+            favoriteList._id as mongoose.Schema.Types.ObjectId
+
         await newUser.save()
 
         const token = jwt.sign(
@@ -53,6 +63,7 @@ export const registerUser = async (
             username: newUser.username,
             profilePicture: newUser.profilePicture,
             shoppingListId: shoppingList._id,
+            favoriteListId: favoriteList._id,
         })
     } catch (error) {
         console.error('Error during registration:', error)
@@ -94,6 +105,8 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
             userId: user._id,
             username: user.username,
             profilePicture: user.profilePicture,
+            shoppingListId: user.shoppingListId,
+            favoriteListId: user.favoriteListId,
         })
     } catch (error) {
         console.error('Error during login:', error)
@@ -130,6 +143,8 @@ export const logoutUser = async (
                 token: null,
                 username: null,
                 profilePicture: null,
+                shoppingListId: null,
+                favoriteListId: null,
                 id: null,
             },
         })
