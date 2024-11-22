@@ -3,7 +3,11 @@
         <div class="banner__image"></div>
         <h1 class="banner__title">{{ title }}</h1>
         <p class="banner__desc">{{ description }}</p>
-        <button class="banner__button">Add to favorite recipes</button>
+        <button class="banner__button" @click="toggleFavorite">
+            {{
+                isFavorite ? 'Remove from favorites' : 'Add to favorite recipes'
+            }}
+        </button>
         <div class="banner__time">
             <svg class="banner__icon">
                 <use href="../../assets/icons/icons.svg#clock-icon"></use>
@@ -14,11 +18,28 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+import { defineProps, defineEmits } from 'vue'
+
+const props = defineProps<{
+    id: string
     title: string
     description: string
-    time: string
+    time: number
+    isFavorite: boolean
 }>()
+
+const emit = defineEmits<{
+    (event: 'addToFav', id: string): void
+    (event: 'removeFromFav', id: string): void
+}>()
+
+const toggleFavorite = () => {
+    if (props.isFavorite) {
+        emit('removeFromFav', props.id)
+    } else {
+        emit('addToFav', props.id)
+    }
+}
 </script>
 
 <style lang="scss" scope>
