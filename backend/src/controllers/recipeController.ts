@@ -85,7 +85,9 @@ export const searchRecipesByIngredient = async (
     }
 
     try {
-        const ingredient = await Ingredient.findOne({ ttl: { $regex: ingredientName, $options: 'i' } })
+        const ingredient = await Ingredient.findOne({
+            ttl: { $regex: ingredientName, $options: 'i' },
+        })
 
         if (!ingredient) {
             res.status(404).json({ message: 'Ingredient not found' })
@@ -93,17 +95,74 @@ export const searchRecipesByIngredient = async (
         }
 
         const recipes = await Recipe.find({
-            ingredients: { $elemMatch: { id: ingredient._id } }
-        });
+            ingredients: { $elemMatch: { id: ingredient._id } },
+        })
 
         res.status(200).json(recipes)
 
         if (recipes.length === 0) {
-            res.status(404).json({ message: 'No recipes found for this ingredient' })
+            res.status(404).json({
+                message: 'No recipes found for this ingredient',
+            })
             return
         }
     } catch (error) {
         console.error(error)
+        res.status(500).json({ message: 'Server error' })
+    }
+}
+
+// Dodanie przepisu
+export const addNewRecipe = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    const {
+        title,
+        category,
+        area,
+        instructions,
+        description,
+        thumb,
+        ingredients,
+    } = req.body
+
+    if (
+        !title ||
+        !category ||
+        !area ||
+        !instructions ||
+        !description ||
+        !ingredients
+    ) {
+        res.status(400).json({ message: 'All fields are required' })
+        return
+    }
+
+    try {
+        const existingRecipe = await Recipe.findOne({ title })
+        if (existingRecipe) {
+            res.status(400).json({ message: 'Recipe already exists' })
+            return
+        }
+
+        const newRecipe = new Recipe({
+            title,
+            category,
+            area,
+            instructions,
+            description,
+            thumb,
+            ingredients, // Dokończyć składniki
+        })
+
+        await newRecipe.save()
+        res.status(201).json({
+            message: 'Recipe added successfully',
+            recipe: newRecipe,
+        })
+    } catch (error) {
+        console.error('Error during recipe adding:', error)
         res.status(500).json({ message: 'Server error' })
     }
 }
