@@ -5,6 +5,7 @@ import {
     getRecipeById,
     searchRecipesByTitle,
     searchRecipesByIngredient,
+    addNewRecipe,
 } from '../controllers/recipeController'
 
 const router = express.Router()
@@ -23,5 +24,8 @@ router.get('/search/title/:keyword', searchRecipesByTitle)
 
 // Wyszukiwanie przepisów według składnika
 router.get('/search/ingredient/:ingredientName', searchRecipesByIngredient)
+
+// Dodawanie nowego przepisu
+router.post('/add', addNewRecipe)
 
 export default router
